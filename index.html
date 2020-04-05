@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Mengyang Guo</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<header>
+  <nav class="main-nav">
+    <ul>
+      <li>
+        <ul>
+          <li><a href="index.html" class="active">about</a></li>
+          <li><a href="Research.html"> Research</a></li>
+          <li><a href="Publication.html"> Publication</a></li>
+          <li><a href="projets.html"> News</a></li>
+          <li><a href="contact.html"> Contact</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+<section id="video" class="home">
+  <h1><b>Mengyang Guo</b></h1>
+  <h2><b>Rutgers University</b></h2>
+  <h2><b>Echoes Lab</b></h2>
+</section>
+<section id="main-content">
+  <div class="text-intro">
+    <h2>About me</h2>
+    
+   
+  </div>
+  <div class="columns features">
+    <div class="one-third first">
+      <img src="images/IRIS-2-small.JPG" style="width:250px;height:229px;">
+      <p> <b>Hi, I am Mengyang (IRIS). <br>My research interests are BIM, LiDAR data analysis,3D NDT Infrastructure assessment,  Hurricane Damage Assessment, Web-based data visualization and Cloud-based disaster data collboartory.</b></p>
+      <p><a href="https://sites.google.com/site/smartislaboratory/" class="more" target="_blank">Learn more about my lab :)</a></p>
+       <p><a href="https://www.youtube.com/channel/UCQ6E9OX6UB0OoXld-nDeXdg" class="more" target="_blank">Our Youtube channel (New!)</a></p>
+        <p><a href="https://github.com/gmy0317" class="more" target="_blank">Github</a></p>
+    </div>
+
+    <div class="one-third">
+      <h3><b>Technical Skills</b></h3>
+      <p><b>Software:</b>Revit, ArcGIS, Navisworks, MicroStation, AutoCAD</p>
+      <p><b>Programming Language:</b>Python, JavaScript, HTML, PHP, SQL, C++, MATLAB</p>
+      <p><b>Cloud Service:</b>AWS(3+ yrs), Azure(2yrs)</p>
+      <p><b>LiDAR System:</b>Faro Static LiDAR, Velodyne Mobile LiDAR, Z+F PROFILER Laser Scanner</p>
+
+      <!-- <p><a href="#" class="more">En savoir plus</a></p> -->
+    </div>
+    <div class="one-third">
+      <h3><b>Courses</b></h3>
+      <p>BIM; Introduction to GIS; Construction Management</p>
+      <p>Software Engineering and Web Application; Computer Vision</p>
+      <p>Advanced Data Mining; Programming Finance (c++)</p>
+      <p>Teaching Assistant for BIM Class for two years</p>
+      <!-- <p><a href="#" class="more">En savoir plus</a></p> -->
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+  
+  var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+
+<section>
+  
+
+<!-- Container for the image gallery -->
+<div class="container">
+
+  <!-- Full-width images with number text -->
+  <div class="mySlides">
+    <div class="numbertext">1 / 12</div>
+      <img src="images/rt35.jpg" style="width:100%">
+  </div>
+
+  <div class="mySlides">
+    <div class="numbertext">2 / 12</div>
+      <img src="images/harvey.jpg" style="width:100%">
+  </div>
+
+  <div class="mySlides">
+    <div class="numbertext">3 / 12</div>
+      <img src="images/ndt-bridge.jpg" style="width:100%">
+  </div>
+
+  <div class="mySlides">
+    <div class="numbertext">4 / 12</div>
+      <img src="images/bim.jpg" style="width:100%">
+  </div>
+
+  <div class="mySlides">
+    <div class="numbertext">5 / 12</div>
+      <img src="images/nearmiss.jpg" style="width:100%">
+  </div>
+
+  <div class="mySlides">
+    <div class="numbertext">6 / 12</div>
+      <img src="images/airborne.jpg" style="width:100%">
+  </div>
+
+  <div class="mySlides">
+    <div class="numbertext">7 / 12</div>
+      <img src="images/mobile.jpg" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">8 / 12</div>
+      <img src="images/tunnel.jpg" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">9 / 12</div>
+      <img src="images/onecall.jpg" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">10 / 12</div>
+      <img src="images/sandy.jpg" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">11 / 12</div>
+      <img src="images/museum.jpg" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">12 / 12</div>
+      <img src="images/utilitycost.jpg" style="width:100%">
+  </div>
+
+  <!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+  <!-- Image text -->
+  <div class="caption-container">
+    <p id="caption"></p>
+  </div>
+
+  <!-- Thumbnail images -->
+  <div class="row">
+    <div class="column">
+      <img class="demo cursor" src="images/rt35.jpg" width="150" height="100" onclick="currentSlide(1)" alt="3D NDT Bridge Model">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/harvey.jpg" width="150" height="100" onclick="currentSlide(2)" alt="Hurricane Harvey Data Map">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/ndt-bridge.jpg" width="150" height="100" onclick="currentSlide(3)" alt="3D NDT Bridge Model">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/bim.jpg" width="150" height="100" onclick="currentSlide(4)" alt="Web-based BIM model Viewer">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/nearmiss.jpg" width="150" height="100" onclick="currentSlide(5)" alt="Fusion of IP camera and LiDAR">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/airborne.jpg" width="150" height="100" onclick="currentSlide(6)" alt="Airborne LiDAR for RT 18">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/mobile.jpg" width="150" height="100" onclick="currentSlide(7)" alt="Hurricane Sandy Mobile LiDAR">
+    </div>
+
+    <div class="column">
+      <img class="demo cursor" src="images/tunnel.jpg" width="150" height="100" onclick="currentSlide(8)" alt="3D NDT model for tunnel">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/onecall.jpg" width="150" height="100" onclick="currentSlide(9)" alt="NJ OneCall Exam System">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/sandy.jpg" width="150" height="100" onclick="currentSlide(10)" alt="Hurricane Sandy Data Portal">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/museum.jpg" width="150" height="100" onclick="currentSlide(11)" alt="Rutger museum LiDAR model">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="images/utilitycost.jpg" width="150" height="100" onclick="currentSlide(12)" alt="BPU Utility Cost Estimator">
+    </div>
+
+
+  </div>
+</div>
+
+
+</section>
+
+<script type="text/javascript" src="https://free-hit-counters.net/count/2umc"></script><br>
+ <a href='http://www.counter-zaehler.de'>_</a> <script type='text/javascript' src='https://whomania.com/ctr?id=dc4b9f1d12ba3a60a08ae797a70b1c553ffc4921'></script>
+
+
+<!-- <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=6ZegkkdiGwBV-Z1X-Eh64lVZJ1VMqgJ0ess2l0OlI0o&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script> -->
+</footer>
+</body>
+</html>
