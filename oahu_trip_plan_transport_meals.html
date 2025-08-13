@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_bc5706dec4f24f1b48b8007246417b98 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>
+    
+    
+<div id="sidebar" class="open">
+  <div class="sidebar-header">Oʻahu 行程计划（点击定位）</div>
+  <div id="days"></div>
+  <button id="toggleLeft" title="折叠/展开">«</button>
+</div>
+
+<div id="infobar" class="open">
+  <div class="infobar-header">每日餐饮建议（黄色星标为标志餐厅）</div>
+  <div id="meals"></div>
+  <button id="toggleRight" title="折叠/展开">»</button>
+</div>
+
+<style>
+  #sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 320px; background: #fff; border-right: 1px solid #eee;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.05); z-index: 1000;
+    padding: 12px 10px; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    transition: transform .2s ease-in-out; overflow-y: auto;
+  }
+  #sidebar:not(.open) { transform: translateX(-320px); }
+  #toggleLeft {
+    position: fixed; left: 320px; top: 12px; z-index: 1001;
+    width: 28px; height: 28px; border: 1px solid #ddd; background: #fff; border-radius: 4px;
+    cursor: pointer;
+  }
+  #sidebar:not(.open) + #toggleLeft { left: 0; }
+
+  #infobar {
+    position: fixed; right: 0; top: 0; bottom: 0;
+    width: 340px; background: #fff; border-left: 1px solid #eee;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.05); z-index: 1000;
+    padding: 12px 10px; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    transition: transform .2s ease-in-out; overflow-y: auto;
+  }
+  #infobar:not(.open) { transform: translateX(340px); }
+  #toggleRight {
+    position: fixed; right: 340px; top: 12px; z-index: 1001;
+    width: 28px; height: 28px; border: 1px solid #ddd; background: #fff; border-radius: 4px;
+    cursor: pointer;
+  }
+  #infobar:not(.open) + #toggleRight { right: 0; }
+
+  .sidebar-header, .infobar-header { font-size: 16px; font-weight: 700; margin: 8px 6px 12px; }
+  details { border-bottom: 1px solid #f1f1f1; padding: 6px 0; }
+  summary { cursor: pointer; font-weight: 600; outline: none; }
+  .item { padding: 6px 0 6px 4px; margin-left: 6px; border-left: 2px solid #f1f1f1; }
+  .time { font-weight: 600; margin-right: 6px; }
+  .item:hover { background: #f8f9fb; }
+  .day-title { color: #444; }
+  .meal-day { border-bottom: 1px dashed #eee; padding: 6px 0; }
+  .label { font-weight: 600; color: #333; }
+</style>
+
+<script>
+  const schedule = {"9/27 Sat": [{"time": "10:45", "name": "机场", "coord": [21.324, -157.92]}, {"time": "12:00", "name": "入住 Ko Olina", "coord": [21.333, -158.12]}, {"time": "15:00", "name": "Ko Olina 泻湖玩沙", "coord": [21.333, -158.12]}, {"time": "18:15", "name": "Ko Olina 日落", "coord": [21.333, -158.12]}], "9/28 Sun": [{"time": "09:00", "name": "酒店泳池/泻湖", "coord": [21.333, -158.12]}, {"time": "13:00", "name": "Dole Plantation", "coord": [21.523, -158.039]}, {"time": "15:00", "name": "Green World Coffee Farm", "coord": [21.506, -158.034]}, {"time": "17:00", "name": "返回 Ko Olina", "coord": [21.333, -158.12]}], "9/29 Mon": [{"time": "10:00", "name": "出发 → Waimea Valley", "coord": [21.64, -158.057]}, {"time": "12:30", "name": "Haleʻiwa 午餐", "coord": [21.593, -158.104]}, {"time": "15:00", "name": "入住 北岸", "coord": [21.706, -157.999]}, {"time": "18:00", "name": "Sunset Beach 日落", "coord": [21.678, -158.041]}], "9/30 Tue": [{"time": "10:30", "name": "Laniakea 海龟", "coord": [21.638, -158.067]}, {"time": "12:30", "name": "Haleʻiwa 逛街+刨冰", "coord": [21.593, -158.104]}, {"time": "15:30", "name": "Shark's Cove 潮池", "coord": [21.647, -158.063]}, {"time": "17:30", "name": "返回 北岸 酒店", "coord": [21.706, -157.999]}], "10/1 Wed": [{"time": "09:30", "name": "Kuilima Cove 浮潜", "coord": [21.704, -157.999]}, {"time": "13:00", "name": "PCC 波利尼西亚文化中心", "coord": [21.64, -157.924]}, {"time": "19:30", "name": "HĀ: Breath of Life 夜秀", "coord": [21.64, -157.924]}], "10/2 Thu": [{"time": "10:00", "name": "退房 → Kualoa Ranch", "coord": [21.515, -157.836]}, {"time": "15:30", "name": "入住 Kahala", "coord": [21.272, -157.773]}, {"time": "16:30", "name": "Kahala 私人海滩休闲", "coord": [21.272, -157.773]}], "10/3 Fri": [{"time": "09:00", "name": "Makapuʻu Lighthouse Trail", "coord": [21.313, -157.652]}, {"time": "11:30", "name": "Waimanalo Beach", "coord": [21.333, -157.698]}, {"time": "14:30", "name": "Waikiki 购物", "coord": [21.281, -157.837]}, {"time": "18:00", "name": "返回 Kahala", "coord": [21.272, -157.773]}], "10/4 Sat": [{"time": "09:30", "name": "退房 → 机场", "coord": [21.324, -157.92]}]};
+  const meals = {"9/27 Sat": {"lunch": "Monkeypod Kitchen (Ko Olina)", "dinner": "Mina's Fish House 或 Monkeypod（看日落后就近）"}, "9/28 Sun": {"lunch": "Dole Plantation 小食 / 回 Ko Olina 后 Monkeypod", "dinner": "Monkeypod Kitchen (Ko Olina)"}, "9/29 Mon": {"lunch": "Haleiwa Joe's (North Shore)", "dinner": "Turtle Bay 区内餐厅（便捷）"}, "9/30 Tue": {"lunch": "Haleiwa Joe's 或 Kono's（北岸）", "dinner": "酒店餐厅 / Haleiwa 小镇"}, "10/1 Wed": {"lunch": "PCC 园区餐饮（便捷）", "dinner": "返回北岸后酒店餐厅"}, "10/2 Thu": {"lunch": "Kualoa Ranch 餐厅", "dinner": "Plumeria Beach House (Kahala)"}, "10/3 Fri": {"lunch": "Waikiki（Marukame Udon/国际料理）", "dinner": "Plumeria Beach House 或 House Without A Key"}, "10/4 Sat": {"lunch": "机场简餐", "dinner": "-"}};
+
+  function findLeafletMapDiv() {
+    for (const k in window) {
+      if (k.startsWith('map_')) {
+        const el = document.getElementById(k);
+        if (el) return el;
+      }
+    }
+    const fm = document.querySelector('.folium-map');
+    return fm || null;
+  }
+
+  function adjustMapWidth() {
+    const mapDiv = findLeafletMapDiv();
+    if (!mapDiv) return;
+    const leftOpen = document.getElementById('sidebar').classList.contains('open');
+    const rightOpen = document.getElementById('infobar').classList.contains('open');
+    let left = leftOpen ? 320 : 0;
+    let right = rightOpen ? 340 : 0;
+    mapDiv.style.marginLeft = left + 'px';
+    mapDiv.style.marginRight = right + 'px';
+    mapDiv.style.width = 'calc(100% - ' + (left + right) + 'px)';
+  }
+
+  function zoomTo(lat, lng, label) {
+    let leafletMap = null;
+    for (const k in window) {
+      if (k.startsWith('map_') && window[k] && window[k].setView) { leafletMap = window[k]; break; }
+    }
+    if (!leafletMap) return;
+    leafletMap.setView([lat, lng], 14);
+    L.popup().setLatLng([lat, lng]).setContent(label).openOn(leafletMap);
+  }
+
+  function buildSidebar() {
+    const daysEl = document.getElementById('days');
+    for (const day of Object.keys(schedule)) {
+      const d = document.createElement('details');
+      d.open = true;
+      const s = document.createElement('summary');
+      s.innerHTML = `<span class="day-title">${day}</span>`;
+      d.appendChild(s);
+      for (const it of schedule[day]) {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `<span class="time">${it.time}</span> ${it.name}`;
+        item.onclick = () => zoomTo(it.coord[0], it.coord[1], `${day} ${it.time} ${it.name}`);
+        d.appendChild(item);
+      }
+      daysEl.appendChild(d);
+    }
+  }
+
+  function buildInfobar() {
+    const mealsEl = document.getElementById('meals');
+    for (const day of Object.keys(meals)) {
+      const div = document.createElement('div');
+      div.className = 'meal-day';
+      const l = meals[day].lunch || '-';
+      const d = meals[day].dinner || '-';
+      div.innerHTML = `<div class="label">${day}</div>
+        <div>午餐：${l}</div>
+        <div>晚餐：${d}</div>`;
+      mealsEl.appendChild(div);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    buildSidebar();
+    buildInfobar();
+    adjustMapWidth();
+
+    const btnL = document.getElementById('toggleLeft');
+    const sidebar = document.getElementById('sidebar');
+    btnL.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      btnL.textContent = sidebar.classList.contains('open') ? '«' : '»';
+      adjustMapWidth();
+    });
+
+    const btnR = document.getElementById('toggleRight');
+    const infobar = document.getElementById('infobar');
+    btnR.addEventListener('click', () => {
+      infobar.classList.toggle('open');
+      btnR.textContent = infobar.classList.contains('open') ? '»' : '«';
+      adjustMapWidth();
+    });
+  });
+</script>
+    
+            <div class="folium-map" id="map_bc5706dec4f24f1b48b8007246417b98" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_bc5706dec4f24f1b48b8007246417b98 = L.map(
+                "map_bc5706dec4f24f1b48b8007246417b98",
+                {
+                    center: [21.45, -157.99],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 10,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_257d62208e8dc5a93c711d63ef032e33 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var marker_b90db952d9209934add4df2b40ade3dd = L.marker(
+                [21.333, -158.12],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_d7b5c4caad1fc1e7306f8c40164468ee = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b90db952d9209934add4df2b40ade3dd.setIcon(icon_d7b5c4caad1fc1e7306f8c40164468ee);
+        
+    
+            marker_b90db952d9209934add4df2b40ade3dd.bindTooltip(
+                `<div>
+                     Ko Olina 住宿｜贴士：泻湖有救生员巡逻；公共停车位先到先得；酒店区洗手间沿步道均有标识。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_99e9c7eb5fbaf688ac25fa49426c6948 = L.marker(
+                [21.706, -157.999],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_0ec09fff3c868e7fc003e9e86e146754 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_99e9c7eb5fbaf688ac25fa49426c6948.setIcon(icon_0ec09fff3c868e7fc003e9e86e146754);
+        
+    
+            marker_99e9c7eb5fbaf688ac25fa49426c6948.bindTooltip(
+                `<div>
+                     北岸 Turtle Bay 住宿
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_8c90054755bf098d67fcc2c88aa55086 = L.marker(
+                [21.272, -157.773],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_691df78a6090834d5ab78795e017bf25 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "purple", "prefix": "glyphicon"}
+            );
+            marker_8c90054755bf098d67fcc2c88aa55086.setIcon(icon_691df78a6090834d5ab78795e017bf25);
+        
+    
+            marker_8c90054755bf098d67fcc2c88aa55086.bindTooltip(
+                `<div>
+                     Kahala 住宿｜贴士：酒店区停车收费；私人海滩相对安静。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_9bed0b36789bb8972ca0e52cd0fad805 = L.marker(
+                [21.647, -158.063],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_40ac5bda4ced0f006829c962545726b6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_9bed0b36789bb8972ca0e52cd0fad805.setIcon(icon_40ac5bda4ced0f006829c962545726b6);
+        
+    
+            marker_9bed0b36789bb8972ca0e52cd0fad805.bindTooltip(
+                `<div>
+                     Shark's Cove｜夏季较平静；穿溯溪鞋防礁石；无救生员，注意浪况。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_c31e6395778df0cd5c9fd3bb226c5e4e = L.marker(
+                [21.638, -158.067],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_ba914b9f57c0b6420008ea5874c4202d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_c31e6395778df0cd5c9fd3bb226c5e4e.setIcon(icon_ba914b9f57c0b6420008ea5874c4202d);
+        
+    
+            marker_c31e6395778df0cd5c9fd3bb226c5e4e.bindTooltip(
+                `<div>
+                     Laniakea Beach (海龟)｜与海龟保持≥3米；路边停车极少，注意安全与栅栏提示。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a48562d9fd86412437e2100011f0f230 = L.marker(
+                [21.523, -158.039],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_7b2b3882005bacb77ef0caf34698ebd6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_a48562d9fd86412437e2100011f0f230.setIcon(icon_7b2b3882005bacb77ef0caf34698ebd6);
+        
+    
+            marker_a48562d9fd86412437e2100011f0f230.bindTooltip(
+                `<div>
+                     Dole Plantation｜小火车适合亲子；现场有洗手间和快餐点。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_08edc63716735b7972ae4a041174d2ab = L.marker(
+                [21.678, -158.041],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_3710a8ad345cf20a0afd7413facee9c6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_08edc63716735b7972ae4a041174d2ab.setIcon(icon_3710a8ad345cf20a0afd7413facee9c6);
+        
+    
+            marker_08edc63716735b7972ae4a041174d2ab.bindTooltip(
+                `<div>
+                     Sunset Beach｜日落名点；路边停车注意安全；无灯光，尽早返程。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b83340820e3ea833e6493953d9e0873e = L.marker(
+                [21.64, -157.924],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_d7ea0091006d144c6f21cdf06a638d5c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_b83340820e3ea833e6493953d9e0873e.setIcon(icon_d7ea0091006d144c6f21cdf06a638d5c);
+        
+    
+            marker_b83340820e3ea833e6493953d9e0873e.bindTooltip(
+                `<div>
+                     Polynesian Cultural Center｜建议提前订票；园区内洗手间众多；夜秀结束返程注意车流。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_28ec1ac1a65cdc544f000d259837bad6 = L.marker(
+                [21.281, -157.837],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_934ffec61a8088367e5bb277f56a3e3e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_28ec1ac1a65cdc544f000d259837bad6.setIcon(icon_934ffec61a8088367e5bb277f56a3e3e);
+        
+    
+            marker_28ec1ac1a65cdc544f000d259837bad6.bindTooltip(
+                `<div>
+                     Waikiki｜停车昂贵且紧张；购物点密集，步行更方便。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1e642c5484f4b77b39cdf88cff9961c1 = L.marker(
+                [21.506, -158.034],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_3cb7f520e1955099e96ecd8c76176a9c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_1e642c5484f4b77b39cdf88cff9961c1.setIcon(icon_3cb7f520e1955099e96ecd8c76176a9c);
+        
+    
+            marker_1e642c5484f4b77b39cdf88cff9961c1.bindTooltip(
+                `<div>
+                     Green World Coffee Farm｜可短暂停车；有咖啡与小甜点。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b694e4c63a9097a4527ae8df1301a69c = L.marker(
+                [21.64, -158.057],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_e1f547882816bd71f4ff966af1b3e399 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_b694e4c63a9097a4527ae8df1301a69c.setIcon(icon_e1f547882816bd71f4ff966af1b3e399);
+        
+    
+            marker_b694e4c63a9097a4527ae8df1301a69c.bindTooltip(
+                `<div>
+                     Waimea Valley｜游客中心有洗手间与停车；步道平缓，瀑布区需救生衣（现场提供）。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_1876bf266929bd9726fc753a2ddeb195 = L.marker(
+                [21.593, -158.104],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_020d0df60643b4961b7ebd5ed2345166 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_1876bf266929bd9726fc753a2ddeb195.setIcon(icon_020d0df60643b4961b7ebd5ed2345166);
+        
+    
+            marker_1876bf266929bd9726fc753a2ddeb195.bindTooltip(
+                `<div>
+                     Haleʻiwa 小镇｜路边停车位较紧张，建议公共停车场；多家餐厅可选。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_ee6e58f2d2fce5393313c7351b111586 = L.marker(
+                [21.704, -157.999],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_18682014f31ec6edda00055338edf295 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_ee6e58f2d2fce5393313c7351b111586.setIcon(icon_18682014f31ec6edda00055338edf295);
+        
+    
+            marker_ee6e58f2d2fce5393313c7351b111586.bindTooltip(
+                `<div>
+                     Kuilima Cove｜相对平静的近岸浮潜点；度假区内有洗手间。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_950cf84f8cc2ba5a28a4391afd013fd7 = L.marker(
+                [21.515, -157.836],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_2de43ee8ee8e2f5b6b2f711d50646a6b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_950cf84f8cc2ba5a28a4391afd013fd7.setIcon(icon_2de43ee8ee8e2f5b6b2f711d50646a6b);
+        
+    
+            marker_950cf84f8cc2ba5a28a4391afd013fd7.bindTooltip(
+                `<div>
+                     Kualoa Ranch｜多项目需预约；现场有餐饮与洗手间。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_dc0979acbd727eb3d1c20cf4b473625a = L.marker(
+                [21.313, -157.652],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_7dd5d83559cd5d4f2c9a868f462bc5cb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_dc0979acbd727eb3d1c20cf4b473625a.setIcon(icon_7dd5d83559cd5d4f2c9a868f462bc5cb);
+        
+    
+            marker_dc0979acbd727eb3d1c20cf4b473625a.bindTooltip(
+                `<div>
+                     Makapuʻu Lighthouse｜无树荫，注意防晒与补水；步道起点有洗手间。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7dc321239f439d65e887a7e06cc3e994 = L.marker(
+                [21.333, -157.698],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_5851afaed48dc1af455f35f5fe1aa1de = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_7dc321239f439d65e887a7e06cc3e994.setIcon(icon_5851afaed48dc1af455f35f5fe1aa1de);
+        
+    
+            marker_7dc321239f439d65e887a7e06cc3e994.bindTooltip(
+                `<div>
+                     Waimanalo Beach｜沙质细软，适合堆沙；留意离岸流提示。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_31ae4c6c98081974d3f4f5ecf37f85c5 = L.polyline(
+                [[21.324, -157.92], [21.333, -158.12], [21.333, -158.12], [21.333, -158.12]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_31ae4c6c98081974d3f4f5ecf37f85c5.bindTooltip(
+                `<div>
+                     9/27 Sat 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_33254e8608e8353f432951f10e2d1c19 = L.polyline(
+                [[21.333, -158.12], [21.523, -158.039], [21.506, -158.034], [21.333, -158.12]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_33254e8608e8353f432951f10e2d1c19.bindTooltip(
+                `<div>
+                     9/28 Sun 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a7ac476a184079570ec04f4154dc7b23 = L.polyline(
+                [[21.64, -158.057], [21.593, -158.104], [21.706, -157.999], [21.678, -158.041]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_a7ac476a184079570ec04f4154dc7b23.bindTooltip(
+                `<div>
+                     9/29 Mon 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_72dbb39e680d18298d5f95ad9601e714 = L.polyline(
+                [[21.638, -158.067], [21.593, -158.104], [21.647, -158.063], [21.706, -157.999]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_72dbb39e680d18298d5f95ad9601e714.bindTooltip(
+                `<div>
+                     9/30 Tue 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_047f7c73e50bdbbef6c3821f00f26f68 = L.polyline(
+                [[21.704, -157.999], [21.64, -157.924], [21.64, -157.924]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_047f7c73e50bdbbef6c3821f00f26f68.bindTooltip(
+                `<div>
+                     10/1 Wed 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a32797d80eeb9b1f15106acc3fe23ea4 = L.polyline(
+                [[21.515, -157.836], [21.272, -157.773], [21.272, -157.773]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_a32797d80eeb9b1f15106acc3fe23ea4.bindTooltip(
+                `<div>
+                     10/2 Thu 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_5f1e51afee586c143e2f8c3db8f9803a = L.polyline(
+                [[21.313, -157.652], [21.333, -157.698], [21.281, -157.837], [21.272, -157.773]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_5f1e51afee586c143e2f8c3db8f9803a.bindTooltip(
+                `<div>
+                     10/3 Fri 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a281eac9f3e105b41a33c70ac084d91f = L.polyline(
+                [[21.324, -157.92]],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            poly_line_a281eac9f3e105b41a33c70ac084d91f.bindTooltip(
+                `<div>
+                     10/4 Sat 路线
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_37157cdfff37c9c895835197da3891ca = L.marker(
+                [21.3357, -158.1211],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_afda2126f9a2ce41a721485f4869dd25 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_37157cdfff37c9c895835197da3891ca.setIcon(icon_afda2126f9a2ce41a721485f4869dd25);
+        
+    
+            marker_37157cdfff37c9c895835197da3891ca.bindTooltip(
+                `<div>
+                     Monkeypod Kitchen (Ko Olina)｜适合家庭，夏威夷风味；午晚餐皆宜。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_0a8e5ac6df60f685b6d8089ac22d7e74 = L.marker(
+                [21.5926, -158.1038],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_1413d2b3808c624ca895d753000c9e96 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_0a8e5ac6df60f685b6d8089ac22d7e74.setIcon(icon_1413d2b3808c624ca895d753000c9e96);
+        
+    
+            marker_0a8e5ac6df60f685b6d8089ac22d7e74.bindTooltip(
+                `<div>
+                     Haleiwa Joe's (North Shore)｜北岸人气美食，海鲜与牛排；建议早到或候位。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7115106012144926d5ace593f73bc3b1 = L.marker(
+                [21.2699, -157.7735],
+                {}
+            ).addTo(map_bc5706dec4f24f1b48b8007246417b98);
+        
+    
+            var icon_120d77a53982ee082f0e07536fea056e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_7115106012144926d5ace593f73bc3b1.setIcon(icon_120d77a53982ee082f0e07536fea056e);
+        
+    
+            marker_7115106012144926d5ace593f73bc3b1.bindTooltip(
+                `<div>
+                     Plumeria Beach House (Kahala)｜The Kahala 酒店餐厅，景观佳；适合轻松晚餐。
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
