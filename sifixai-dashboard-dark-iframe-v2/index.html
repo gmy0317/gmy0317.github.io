@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SiFix.AI • Equipment Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">SiFix.AI • Equipment Overview</div>
+    <div class="clock" id="clock">--:--:--</div>
+  </header>
+
+  <main class="layout">
+    <!-- ================= Left 75% ================= -->
+    <section class="main-col">
+      <!-- Row: Asset Selector -->
+      <section class="card">
+        <h2 class="card-title">Asset Selector</h2>
+        <div class="pill-row">
+          <span class="pill">CNC Line A / Spindle #3</span>
+          <span class="status online">Online</span>
+        </div>
+        <div class="pill-row">
+          <span class="pill hollow">Shift: Day • Operator: John</span>
+        </div>
+        <div class="oee">
+          <div class="oee-bar"><div class="oee-fill" style="width:65%"></div></div>
+          <div class="oee-text">OEE: 65%</div>
+        </div>
+      </section>
+
+      <!-- Row: Metrics + Shortcuts -->
+      <div class="grid-3">
+        <section class="card span-2">
+          <h2 class="card-title">Real-Time Metrics — Spindle #3</h2>
+          <div class="metrics-grid">
+            <div class="metric">
+              <div class="subcard-title">Vibration (mm/s)</div>
+              <canvas id="chart-vib" height="150"></canvas>
+              <div class="metric-meta"><span id="val-vib">--</span></div>
+            </div>
+            <div class="metric">
+              <div class="subcard-title">Temperature (°C)</div>
+              <canvas id="chart-temp" height="150"></canvas>
+              <div class="metric-meta"><span id="val-temp">--</span></div>
+            </div>
+            <div class="metric">
+              <div class="subcard-title">Current (A)</div>
+              <canvas id="chart-cur" height="150"></canvas>
+              <div class="metric-meta"><span id="val-cur">--</span></div>
+            </div>
+            <div class="metric">
+              <div class="subcard-title">Voltage (V)</div>
+              <canvas id="chart-volt" height="150"></canvas>
+              <div class="metric-meta"><span id="val-volt">--</span></div>
+            </div>
+            <div class="metric">
+              <div class="subcard-title">Humidity (%RH)</div>
+              <canvas id="chart-hum" height="150"></canvas>
+              <div class="metric-meta"><span id="val-hum">--</span></div>
+            </div>
+            <div class="metric">
+              <div class="subcard-title">Spindle Speed (RPM)</div>
+              <canvas id="chart-rpm" height="150"></canvas>
+              <div class="metric-meta"><span id="val-rpm">--</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title">Agent Shortcuts</h2>
+          <a id="btn-ask" class="shortcut" href="#assistant">
+            <div class="sc-title">Ask maintenance question</div>
+            <div class="sc-sub">Search SOP / casebook / KG ▶</div>
+          </a>
+          <a id="btn-log" class="shortcut" href="#assistant">
+            <div class="sc-title">Log repair (voice or text)</div>
+            <div class="sc-sub">Wizard • speech-to-text ▶</div>
+          </a>
+          <a class="shortcut" href="javascript:void(0)">
+            <div class="sc-title">Open work orders</div>
+            <div class="sc-sub">3 pending approvals</div>
+          </a>
+          <a class="shortcut" href="javascript:void(0)">
+            <div class="sc-title">Download case reports</div>
+            <div class="sc-sub">Latest 24h reports</div>
+          </a>
+        </section>
+      </div>
+
+      <!-- Row: Alerts + Knowledge -->
+      <div class="grid-3">
+        <section class="card">
+          <h2 class="card-title">Upcoming Alerts</h2>
+          <div class="alert">
+            <div class="alert-title">Spindle vibration ↑</div>
+            <div class="alert-sub warn">Warning · predicted in 2.5 days</div>
+          </div>
+          <div class="alert">
+            <div class="alert-title">Coolant flow fluctuation</div>
+            <div class="alert-sub ok">Normalizing · monitor</div>
+          </div>
+          <div class="alert">
+            <div class="alert-title">Axis B servomotor temp</div>
+            <div class="alert-sub info">Alert if &gt; 80°C</div>
+          </div>
+        </section>
+
+        <section class="card span-2">
+          <h2 class="card-title">Knowledge Feed — Evidence &amp; Citations</h2>
+          <div class="knowledge-row">
+            <div class="knowledge-card">SOP Section 3.4 <span>Tool torque spec • change log</span></div>
+            <div class="knowledge-card">SOP Section 4.4 <span>Tool torque spec • change log</span></div>
+            <div class="knowledge-card">SOP Section 5.4 <span>Tool torque spec • change log</span></div>
+            <div class="knowledge-card">SOP Section 6.4 <span>Tool torque spec • change log</span></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ================= Right 25% (Dify Assistant) ================= -->
+    <aside class="side-col" id="assistant">
+      <section class="card assistant-card">
+        <h2 class="card-title" id="assistant-title">Agent Assistant（Dify）</h2>
+
+        <!-- Default mode: color-invert filter darken -->
+        <div class="iframe-wrapper filter-darken" id="difyWrapper" aria-label="Dify assistant chat area">
+          <iframe id="assistant-iframe"
+            src="http://localhost:8088/chatbot/lNY6YDJIaRcNASUH"
+            style="width: 100%; height: 100%; min-height: 700px"
+            frameborder="0"
+            allow="microphone">
+          </iframe>
+          <div class="dark-veil" aria-hidden="true"></div>
+        </div>
+
+        <!-- toggle between two darkening methods -->
+        <div class="tiny-hint">
+          <button id="toggleMode" class="tiny-btn" title="在两种变暗方式之间切换">切换为遮罩模式</button>
+          <span class="tiny-text">（已默认使用颜色反转）</span>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
