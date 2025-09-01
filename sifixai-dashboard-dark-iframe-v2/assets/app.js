@@ -258,7 +258,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (btnLog) btnLog.addEventListener('click', (e) => {
     e.preventDefault();
-    iframe.src = 'http://localhost:8088/chat/uMFsxnYbVLHpw4RI';
+    iframe.src = 'https://udify.app/chatbot/CqHQ4RmaDJ8o1s5D';
     title.textContent = 'Agent Assistant（Dify）— Log repair';
     document.getElementById('assistant').scrollIntoView({behavior:'smooth'});
   });
