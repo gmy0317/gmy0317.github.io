@@ -251,7 +251,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (btnAsk) btnAsk.addEventListener('click', (e) => {
     e.preventDefault();
-    iframe.src = 'http://localhost:8088/chatbot/lNY6YDJIaRcNASUH';
+    iframe.src = 'https://udify.app/chat/LnwnQ3e2yGRQdc1Z';
     title.textContent = 'Agent Assistant（Dify）— Ask maintenance';
     document.getElementById('assistant').scrollIntoView({behavior:'smooth'});
   });
