@@ -182,12 +182,12 @@ function wireAssistantShortcuts(){
   const wrapper=$('difyWrapper'),toggle=$('toggleMode');
   if(wrapper&&toggle){toggle.addEventListener('click',()=>{if(wrapper.classList.contains('filter-darken')){wrapper.classList.remove('filter-darken');wrapper.classList.add('overlay-darken');toggle.textContent='切换为颜色反转';}else{wrapper.classList.remove('overlay-darken');wrapper.classList.add('filter-darken');toggle.textContent='切换为遮罩模式';}});}
   const iframe=$('assistant-iframe'),title=$('assistant-title'),btnAsk=$('btn-ask'),btnLog=$('btn-log');
-  if(btnAsk)btnAsk.addEventListener('click',e=>{e.preventDefault();iframe.src='http://localhost:8088/chatbot/lNY6YDJIaRcNASUH';title.textContent='Agent Assistant（Dify）— Ask maintenance';document.getElementById('assistant').scrollIntoView({behavior:'smooth'});});
-  if(btnLog)btnLog.addEventListener('click',e=>{e.preventDefault();iframe.src='http://localhost:8088/chat/uMFsxnYbVLHpw4RI';title.textContent='Agent Assistant（Dify）— Log repair';document.getElementById('assistant').scrollIntoView({behavior:'smooth'});});
+  if(btnAsk)btnAsk.addEventListener('click',e=>{e.preventDefault();iframe.src='https://udify.app/chat/LnwnQ3e2yGRQdc1Z';title.textContent='Agent Assistant（Dify）— Ask maintenance';document.getElementById('assistant').scrollIntoView({behavior:'smooth'});});
+  if(btnLog)btnLog.addEventListener('click',e=>{e.preventDefault();iframe.src='https://udify.app/chat/CqHQ4RmaDJ8o1s5D';title.textContent='Agent Assistant（Dify）— Log repair';document.getElementById('assistant').scrollIntoView({behavior:'smooth'});});
 }
 function wireKnowledgeButtons(){
   const iframe=$('assistant-iframe'),title=$('assistant-title');
-  document.querySelectorAll('.knowledge-btn').forEach(btn=>btn.addEventListener('click',()=>{iframe.src='http://localhost:8088/chatbot/lNY6YDJIaRcNASUH';title.textContent=`Agent Assistant（Dify）— ${btn.textContent.split('\n')[0]}`;document.getElementById('assistant').scrollIntoView({behavior:'smooth'});}));}
+  document.querySelectorAll('.knowledge-btn').forEach(btn=>btn.addEventListener('click',()=>{iframe.src='https://udify.app/chat/LnwnQ3e2yGRQdc1Z';title.textContent=`Agent Assistant（Dify）— ${btn.textContent.split('\n')[0]}`;document.getElementById('assistant').scrollIntoView({behavior:'smooth'});}));}
 
 /* ===== stepper ===== */
 function wireStepper(){const stepper=document.getElementById('line-stepper');stepper.querySelectorAll('.step').forEach(btn=>btn.addEventListener('click',()=>{stepper.querySelectorAll('.step').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const stage=btn.dataset.stage;if(activeAlert&&activeAlert.stage===stage){const picked=activeAlert._pickedVariant||null;const faultSpec=picked?.faultSpec||activeAlert.faultSpec||null;renderMetrics(stage,faultSpec);}else{renderMetrics(stage,null);}}));}
