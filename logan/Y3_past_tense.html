@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logan - Past Tense Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary: #4a6cf7;
+      --accent: #ffb300;
+      --bg: #f4f6fb;
+      --correct: #2e7d32;
+      --wrong: #c62828;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #fff3e0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px 18px 24px;
+      max-width: 720px;
+      width: 100%;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      color: #1a237e;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin: 6px 0 10px;
+      color: #455a64;
+      font-size: 0.95rem;
+    }
+
+    .mode-select {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .mode-select label {
+      font-size: 0.9rem;
+      background: #e8eaf6;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .mode-select input {
+      margin-right: 4px;
+    }
+
+    .scoreboard {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+
+    .scoreboard span strong {
+      color: #1a237e;
+    }
+
+    .scoreboard .streak {
+      background: #fffde7;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #ffe082;
+    }
+
+    .card {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--bg);
+      border: 1px solid #c5cae9;
+    }
+
+    #question-text {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #263238;
+    }
+
+    #question-cn {
+      font-size: 0.95rem;
+      color: #546e7a;
+      margin-bottom: 10px;
+    }
+
+    #options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .option-btn {
+      flex: 1 1 calc(50% - 8px);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      padding: 10px 12px;
+      font-size: 1.05rem;
+      background: #ffffff;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+      opacity: 0.96;
+      box-shadow: none;
+    }
+
+    .option-correct {
+      border-color: var(--correct);
+      background-color: rgba(46, 125, 50, 0.08);
+    }
+
+    .option-wrong {
+      border-color: var(--wrong);
+      background-color: rgba(198, 40, 40, 0.06);
+    }
+
+    #feedback {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px dashed #cfd8dc;
+      min-height: 70px;
+      background-color: #fafafa;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    #feedback.correct {
+      border-color: var(--correct);
+      background-color: #f0f8f3;
+    }
+
+    #feedback.wrong {
+      border-color: var(--wrong);
+      background-color: #fdf3f3;
+    }
+
+    #feedback-text {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    #animal-speech {
+      font-size: 0.95rem;
+      color: #455a64;
+    }
+
+    .buttons-row {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    #next-btn,
+    #listen-btn {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.98rem;
+      cursor: pointer;
+      color: white;
+      min-width: 120px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    }
+
+    #next-btn {
+      background: var(--primary);
+    }
+
+    #listen-btn {
+      background: #009688;
+    }
+
+    #next-btn:hover:not(:disabled),
+    #listen-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    #next-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #78909c;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .option-btn {
+        flex: 1 1 100%;
+      }
+
+      .container {
+        padding: 16px 12px 20px;
+      }
+
+      #question-text {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Logan's Past Tense Adventure</h1>
+    <p class="subtitle">中英双语的小小 Past Tense 训练营</p>
+
+    <div class="mode-select">
+      <label>
+        <input type="radio" name="mode" value="baseToPast" checked>
+        原形 → 过去式
+      </label>
+      <label>
+        <input type="radio" name="mode" value="pastToBase">
+        过去式 → 原形
+      </label>
+      <label>
+        <input type="radio" name="mode" value="mixed">
+        混合模式
+      </label>
+    </div>
+
+    <div class="scoreboard">
+      <span>
+        Score:
+        <strong><span id="score">0</span></strong>
+        /
+        <span id="total">0</span>
+      </span>
+      <span class="streak">
+        连续答对 Streak:
+        <strong><span id="streak">0</span></strong>
+      </span>
+    </div>
+
+    <div class="card">
+      <div id="question-text">Loading question…</div>
+      <div id="question-cn"></div>
+      <div id="options"></div>
+    </div>
+
+    <div id="feedback">
+      <div id="feedback-text"></div>
+      <div id="animal-speech"></div>
+    </div>
+
+    <div class="buttons-row">
+      <button id="next-btn" disabled>下一题 Next</button>
+      <button id="listen-btn">听一听发音 Listen</button>
+    </div>
+
+    <p class="hint">
+      小建议：先用「原形 → 过去式」模式练熟，再切换到「混合模式」挑战自己。
+    </p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 1. 常见动词库（可以按需要增删）
+      const verbs = [
+        { base: "go",    past: "went",   cn: "去" },
+        { base: "do",    past: "did",    cn: "做" },
+        { base: "have",  past: "had",    cn: "有" },
+        { base: "make",  past: "made",   cn: "制作/做" },
+        { base: "get",   past: "got",    cn: "得到" },
+        { base: "give",  past: "gave",   cn: "给" },
+        { base: "take",  past: "took",   cn: "拿/带" },
+        { base: "see",   past: "saw",    cn: "看见" },
+        { base: "come",  past: "came",   cn: "来" },
+        { base: "say",   past: "said",   cn: "说" },
+        { base: "tell",  past: "told",   cn: "告诉" },
+        { base: "speak", past: "spoke",  cn: "说话" },
+        { base: "eat",   past: "ate",    cn: "吃" },
+        { base: "drink", past: "drank",  cn: "喝" },
+        { base: "run",   past: "ran",    cn: "跑" },
+        { base: "write", past: "wrote",  cn: "写" },
+        { base: "sleep", past: "slept",  cn: "睡觉" },
+        { base: "feel",  past: "felt",   cn: "感觉" },
+        { base: "hear",  past: "heard",  cn: "听见" },
+        { base: "think", past: "thought",cn: "想/认为" },
+        { base: "find",  past: "found",  cn: "找到" },
+        { base: "leave", past: "left",   cn: "离开" },
+        { base: "put",   past: "put",    cn: "放" },
+        { base: "bring", past: "brought",cn: "带来" },
+        { base: "buy",   past: "bought", cn: "买" },
+        { base: "teach", past: "taught", cn: "教" },
+        { base: "play",  past: "played", cn: "玩/玩游戏" },
+        { base: "walk",  past: "walked", cn: "走路" },
+        { base: "watch", past: "watched",cn: "看(电视等)" },
+        { base: "jump",  past: "jumped", cn: "跳" },
+        { base: "talk",  past: "talked", cn: "说话/聊天" },
+        { base: "open",  past: "opened", cn: "打开" },
+        { base: "close", past: "closed", cn: "关上" },
+        { base: "keep", past: "kept", cn: "保持" },
+        { base: "do", past: "did", cn: "做" },
+        { base: "fly", past: "flew", cn: "飞" },
+        { base: "run", past: "ran", cn: "跑" }
+      ];
+
+      // 2. 鼓励语 & 小动物角色
+      const positiveMessages = [
+        { en: "Excellent!",      cn: "太棒了" },
+        { en: "Amazing!",        cn: "真了不起" },
+        { en: "Great job!",      cn: "干得好" },
+        { en: "You are a star!", cn: "你就是小明星" },
+        { en: "Super work!",     cn: "超级棒" },
+        { en: "Well done!",      cn: "做得很好" }
+      ];
+
+      const animalCharacters = [
+        { cn: "开心小狮子",   en: "happy lion" },
+        { cn: "聪明小熊猫",   en: "clever panda" },
+        { cn: "勇敢小海豚",   en: "brave dolphin" },
+        { cn: "敏捷小兔子",   en: "quick rabbit" },
+        { cn: "温柔小长颈鹿", en: "gentle giraffe" }
+      ];
+
+      // 3. DOM 元素
+      const questionTextEl = document.getElementById("question-text");
+      const questionCnEl = document.getElementById("question-cn");
+      const optionsContainer = document.getElementById("options");
+      const feedbackTextEl = document.getElementById("feedback-text");
+      const animalSpeechEl = document.getElementById("animal-speech");
+      const feedbackBox = document.getElementById("feedback");
+      const scoreEl = document.getElementById("score");
+      const totalEl = document.getElementById("total");
+      const streakEl = document.getElementById("streak");
+      const nextBtn = document.getElementById("next-btn");
+      const listenBtn = document.getElementById("listen-btn");
+      const modeRadios = document.querySelectorAll('input[name="mode"]');
+
+      // 4. 游戏状态
+      const state = {
+        mode: "baseToPast",       // baseToPast | pastToBase | mixed
+        currentVerb: null,
+        questionType: "baseToPast", // 当前题型
+        correctAnswer: "",
+        hasAnswered: false,
+        score: 0,
+        total: 0,
+        streak: 0
+      };
+
+      // 5. 工具函数
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function pickRandomVerb() {
+        const index = Math.floor(Math.random() * verbs.length);
+        state.currentVerb = verbs[index];
+      }
+
+      function updateScoreBoard() {
+        scoreEl.textContent = state.score;
+        totalEl.textContent = state.total;
+        streakEl.textContent = state.streak;
+      }
+
+      function clearFeedback() {
+        feedbackTextEl.textContent = "";
+        animalSpeechEl.textContent = "";
+        feedbackBox.classList.remove("correct", "wrong");
+      }
+
+      function buildOptions(correct, side) {
+        // side: "base" or "past"
+        const options = new Set();
+        options.add(correct);
+        while (options.size < 4 && options.size < verbs.length) {
+          const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
+          const candidate = side === "base" ? randomVerb.base : randomVerb.past;
+          options.add(candidate);
+        }
+        return shuffle(Array.from(options));
+      }
+
+      function setQuestionType() {
+        if (state.mode === "mixed") {
+          state.questionType = Math.random() < 0.5 ? "baseToPast" : "pastToBase";
+        } else {
+          state.questionType = state.mode;
+        }
+      }
+
+      // 6. 出题
+      function showQuestion() {
+        setQuestionType();
+        pickRandomVerb();
+        state.hasAnswered = false;
+        nextBtn.disabled = true;
+        clearFeedback();
+
+        let questionWord;
+        let sideForOptions;
+
+        if (state.questionType === "baseToPast") {
+          // 原形 → 过去式
+          questionWord = state.currentVerb.base;
+          state.correctAnswer = state.currentVerb.past;
+          sideForOptions = "past";
+          questionTextEl.textContent = `What is the past tense of "${questionWord}"?`;
+        } else {
+          // 过去式 → 原形
+          questionWord = state.currentVerb.past;
+          state.correctAnswer = state.currentVerb.base;
+          sideForOptions = "base";
+          questionTextEl.textContent = `Which base verb matches "${questionWord}"?`;
+        }
+
+        questionCnEl.textContent = `中文: ${state.currentVerb.cn}`;
+
+        const optionValues = buildOptions(state.correctAnswer, sideForOptions);
+
+        optionsContainer.innerHTML = "";
+        optionValues.forEach(function (value) {
+          const btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.textContent = value;
+          btn.dataset.value = value;
+          btn.addEventListener("click", function () {
+            handleAnswer(value, btn);
+          });
+          optionsContainer.appendChild(btn);
+        });
+      }
+
+      // 7. 反馈显示
+      function showPositiveFeedback() {
+        const msg = positiveMessages[Math.floor(Math.random() * positiveMessages.length)];
+        const animal = animalCharacters[Math.floor(Math.random() * animalCharacters.length)];
+
+        feedbackTextEl.textContent = msg.en;
+        animalSpeechEl.textContent = `${animal.cn} 说: ${msg.en} Logan! (${msg.cn})`;
+        feedbackBox.classList.add("correct");
+      }
+
+      function showNegativeFeedback() {
+        let extra;
+        if (state.questionType === "baseToPast") {
+          extra = `"${state.currentVerb.base}" → "${state.currentVerb.past}"`;
+        } else {
+          extra = `"${state.currentVerb.past}" → "${state.currentVerb.base}"`;
+        }
+
+        feedbackTextEl.textContent = `Not quite. 正确是: ${extra}`;
+        animalSpeechEl.textContent = "小伙伴说: Keep trying, you can do it!";
+        feedbackBox.classList.add("wrong");
+      }
+
+      // 8. 处理答题
+      function handleAnswer(selected, btnElement) {
+        if (state.hasAnswered) return;
+        state.hasAnswered = true;
+        state.total += 1;
+
+        const optionButtons = document.querySelectorAll(".option-btn");
+
+        if (selected === state.correctAnswer) {
+          state.score += 1;
+          state.streak += 1;
+          btnElement.classList.add("option-correct");
+          showPositiveFeedback();
+        } else {
+          state.streak = 0;
+          btnElement.classList.add("option-wrong");
+          optionButtons.forEach(function (btn) {
+            if (btn.dataset.value === state.correctAnswer) {
+              btn.classList.add("option-correct");
+            }
+          });
+          showNegativeFeedback();
+        }
+
+        optionButtons.forEach(function (btn) {
+          btn.disabled = true;
+        });
+        updateScoreBoard();
+        nextBtn.disabled = false;
+      }
+
+      // 9. 切换模式
+      function changeMode(newMode) {
+        state.mode = newMode;
+        state.score = 0;
+        state.total = 0;
+        state.streak = 0;
+        updateScoreBoard();
+        clearFeedback();
+        showQuestion();
+      }
+
+      // 10. 发音（浏览器支持 Web Speech 的话）
+      function speak(text) {
+        if (!("speechSynthesis" in window)) {
+          alert("当前浏览器不支持发音功能。可以换一个浏览器试试。");
+          return;
+        }
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "en-US";
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+      }
+
+      // 11. 事件绑定
+      listenBtn.addEventListener("click", function () {
+        if (!state.currentVerb) return;
+        const word =
+          state.questionType === "baseToPast"
+            ? state.currentVerb.base
+            : state.currentVerb.past;
+        speak(word);
+      });
+
+      nextBtn.addEventListener("click", function () {
+        showQuestion();
+      });
+
+      modeRadios.forEach(function (radio) {
+        radio.addEventListener("change", function (e) {
+          changeMode(e.target.value);
+        });
+      });
+
+      // 初始化
+      updateScoreBoard();
+      showQuestion();
+    });
+  </script>
+</body>
+</html>
