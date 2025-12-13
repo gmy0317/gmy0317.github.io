@@ -553,12 +553,12 @@
       // 11. 事件绑定
       listenBtn.addEventListener("click", function () {
         if (!state.currentVerb) return;
-        const word =
-          state.questionType === "baseToPast"
-            ? state.currentVerb.base
-            : state.currentVerb.past;
-        speak(word);
+        // 这里统一读：现在式 + 过去式，比如：fly, flew
+        const phrase = `${state.currentVerb.base}, ${state.currentVerb.past},${state.currentVerb.base}, ${state.currentVerb.past}`;
+        speak(phrase);
       });
+
+
 
       nextBtn.addEventListener("click", function () {
         showQuestion();
