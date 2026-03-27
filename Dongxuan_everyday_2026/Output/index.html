@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="每日查看上海天气、农历、吉凶时辰、穿衣建议、生肖提醒与万年历风格信息。"
+    />
+    <title>今日宜忌</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero-card">
+        <div class="tear-header"></div>
+        <div class="calendar-ribbon">
+          <span id="today-month-meta" class="ribbon-text">2026 三月</span>
+          <span id="today-weekday-en" class="ribbon-text">FRIDAY</span>
+        </div>
+
+        <div class="hero-meta">
+          <span class="eyebrow">Dongxuan Everyday</span>
+          <span id="today-location" class="location-pill">上海</span>
+        </div>
+
+        <div class="date-stage">
+          <div class="date-number-wrap">
+            <div id="today-day" class="date-number">27</div>
+          </div>
+          <div class="date-side">
+            <h1 id="today-date" class="hero-title">加载中</h1>
+            <p id="today-lunar" class="hero-subtitle">正在获取农历信息</p>
+            <div class="day-badges">
+              <span id="today-color-badge" class="status-chip">今日衣色 加载中</span>
+              <span id="today-judgement-badge" class="status-chip">总判断 加载中</span>
+            </div>
+          </div>
+        </div>
+
+        <p id="today-summary" class="hero-summary">正在整理今天的天气、时辰与建议。</p>
+
+        <div class="judgement-bar">
+          <span id="judgement-day-type" class="judgement-chip">今日平日</span>
+          <span id="judgement-day-value" class="judgement-chip">日值加载中</span>
+          <strong id="judgement-main" class="judgement-main">总判断加载中</strong>
+        </div>
+
+        <div class="hero-highlights">
+          <article class="hero-highlight">
+            <span class="card-caption">当前时辰</span>
+            <strong id="current-hour-focus">加载中</strong>
+            <p id="current-hour-note">正在计算当前时段。</p>
+          </article>
+          <article class="hero-highlight">
+            <span class="card-caption">优先安排</span>
+            <strong id="best-hours-focus">加载中</strong>
+            <p id="best-hours-note">正在整理较顺时段。</p>
+          </article>
+          <article class="hero-highlight">
+            <span class="card-caption">尽量避开</span>
+            <strong id="avoid-hours-focus">加载中</strong>
+            <p id="avoid-hours-note">正在整理需保守处理的时间。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid-layout">
+        <article class="content-card weather-card">
+          <div class="card-heading antique-heading">
+            <h2>今日天气</h2>
+            <span id="weather-updated" class="card-caption">实时</span>
+          </div>
+          <div class="weather-main">
+            <div>
+              <p id="weather-label" class="weather-label">加载中</p>
+              <p id="weather-temp" class="weather-temp">--°C</p>
+            </div>
+            <div class="weather-stats">
+              <p><span>体感</span><strong id="weather-feels-like">--°C</strong></p>
+              <p><span>风速</span><strong id="weather-wind">-- km/h</strong></p>
+              <p><span>降水</span><strong id="weather-rain">-- mm</strong></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card highlight-card">
+          <div class="card-heading antique-heading">
+            <h2>穿衣建议</h2>
+            <span class="card-caption">天气 + 今日气场</span>
+          </div>
+          <p id="clothing-level" class="highlight-title">加载中</p>
+          <p id="clothing-advice" class="muted-text">正在生成穿搭建议。</p>
+          <div class="color-row">
+            <span>今日衣服颜色</span>
+            <div id="color-swatches" class="color-swatches"></div>
+          </div>
+        </article>
+
+        <article class="content-card almanac-main">
+          <div class="card-heading antique-heading">
+            <h2>今日断语</h2>
+            <span class="card-caption">万年历风格</span>
+          </div>
+          <p id="day-type" class="highlight-title">加载中</p>
+          <p id="day-status" class="muted-text">正在生成日值信息。</p>
+          <div class="fortune-judgement">
+            <span class="card-caption">总判断</span>
+            <strong id="day-judgement">加载中</strong>
+          </div>
+        </article>
+
+        <article class="content-card almanac-side">
+          <div class="card-heading antique-heading">
+            <h2>今日宜</h2>
+            <span class="card-caption">建议控制在 3-5 件</span>
+          </div>
+          <ul id="fortune-yi" class="tag-list"></ul>
+        </article>
+
+        <article class="content-card almanac-side">
+          <div class="card-heading antique-heading">
+            <h2>今日忌</h2>
+            <span class="card-caption">适合先避开</span>
+          </div>
+          <ul id="fortune-ji" class="tag-list"></ul>
+        </article>
+
+        <article class="content-card wide-card">
+          <div class="card-heading antique-heading">
+            <h2>吉凶时辰</h2>
+            <span class="card-caption">传统风格参考</span>
+          </div>
+          <div id="hour-grid" class="hour-grid table-like"></div>
+        </article>
+
+        <article class="content-card wide-card">
+          <div class="card-heading antique-heading">
+            <h2>生肖提醒</h2>
+            <span class="card-caption">羊 / 蛇 / 兔</span>
+          </div>
+          <div id="zodiac-grid" class="zodiac-grid"></div>
+        </article>
+
+        <article class="content-card wide-card">
+          <div class="card-heading antique-heading">
+            <h2>干支与方位</h2>
+            <span class="card-caption">传统风格参考</span>
+          </div>
+          <div class="meta-table">
+            <div class="meta-row meta-row-main">
+              <span class="meta-label">干支年月日</span>
+              <strong id="ganzhi-line" class="meta-value">加载中</strong>
+            </div>
+            <div class="meta-row meta-row-main">
+              <span class="meta-label">冲煞</span>
+              <strong id="conflict-line" class="meta-value">加载中</strong>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">喜神</span>
+              <strong id="xishen-line" class="meta-value">加载中</strong>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">财神</span>
+              <strong id="caishen-line" class="meta-value">加载中</strong>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">福神</span>
+              <strong id="fushen-line" class="meta-value">加载中</strong>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">生门</span>
+              <strong id="shengmen-line" class="meta-value">加载中</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card wide-card">
+          <div class="card-heading antique-heading">
+            <h2>今日注意</h2>
+            <span class="card-caption">务实一点</span>
+          </div>
+          <ul id="today-notes" class="note-list"></ul>
+        </article>
+      </section>
+
+      <footer class="page-footer">
+        <p id="data-status">天气与农历优先走真实接口，吉凶与建议当前为规则生成。</p>
+      </footer>
+    </main>
+
+    <script type="module" src="./assets/js/app.js"></script>
+  </body>
+</html>
