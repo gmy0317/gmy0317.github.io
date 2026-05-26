@@ -120,6 +120,16 @@
             </span>
           </button>
 
+          <section class="history-dock" aria-label="历史生成记录">
+            <div class="history-head">
+              <span>生成历史</span>
+              <button id="clearHistoryBtn" type="button">清空</button>
+            </div>
+            <div class="history-list" id="historyList">
+              <div class="history-empty">暂无记录，生成一次新材料后自动归档。</div>
+            </div>
+          </section>
+
           <div class="molecule-card">
             <div class="molecule">
               <i class="atom a1">Ag</i>
@@ -135,7 +145,7 @@
           </div>
         </aside>
 
-        <main class="workspace">
+        <main class="workspace view-page active-view" id="designView">
           <section class="panel demand-panel">
             <div class="panel-title">
               <div>
@@ -511,6 +521,145 @@
               </div>
             </section>
           </aside>
+        </main>
+
+        <main class="analysis-workspace view-page" id="analysisView" aria-hidden="true">
+          <section class="panel analysis-hero">
+            <div class="analysis-hero-copy">
+              <span class="eyebrow">Generated Material Intelligence</span>
+              <h2 id="analysisTitle">候选材料推荐结果 / 多维分析</h2>
+              <p id="analysisSubtitle">生成后将在这里展示 Top 候选材料、说明、风险、外部约束与后续实验建议。</p>
+            </div>
+            <div class="analysis-meta">
+              <div>
+                <span>生成时间</span>
+                <strong id="analysisTime">--</strong>
+              </div>
+              <div>
+                <span>初始要求</span>
+                <strong id="analysisRequirement">--</strong>
+              </div>
+              <div>
+                <span>推荐材料</span>
+                <strong id="analysisRecommendation">--</strong>
+              </div>
+            </div>
+            <div class="analysis-actions">
+              <button class="ghost-button" id="backToDesignBtn" type="button">← 返回需求页</button>
+              <button class="ghost-button" id="regenerateBtn" type="button">重新生成推荐</button>
+            </div>
+          </section>
+
+          <section class="panel top-candidates-panel">
+            <div class="panel-title tight">
+              <h2>Top 10 推荐候选</h2>
+              <span class="panel-badge" id="candidateCountBadge">0 个候选</span>
+            </div>
+            <div class="analysis-top-list" id="analysisTopList"></div>
+          </section>
+
+          <section class="panel material-analysis-panel">
+            <div class="panel-title">
+              <div>
+                <span class="eyebrow">Candidate Deep Dive</span>
+                <h2 id="analysisBestTitle">候选 #1</h2>
+              </div>
+              <span class="star-badge">★</span>
+            </div>
+
+            <div class="composition-strip">
+              <div>
+                <span>材料组成 (wt%)</span>
+                <div class="chip-row" id="compositionChips"></div>
+              </div>
+              <div>
+                <span>对比基准 (wt%)</span>
+                <div class="chip-row" id="benchmarkChips"></div>
+              </div>
+            </div>
+
+            <div class="deep-grid">
+              <article class="analysis-card">
+                <div class="mini-number">1</div>
+                <h3>多维综合能力</h3>
+                <svg id="analysisRadar" viewBox="0 0 260 230" role="img" aria-label="候选材料能力雷达图"></svg>
+              </article>
+              <article class="analysis-card">
+                <div class="mini-number">2</div>
+                <h3>关键预测指标</h3>
+                <div class="predictor-bars" id="predictorBars"></div>
+              </article>
+              <article class="analysis-card">
+                <div class="mini-number">3</div>
+                <h3>微观机制解释</h3>
+                <div class="mechanism-list" id="mechanismList"></div>
+              </article>
+            </div>
+
+            <div class="comparison-block">
+              <div class="section-head">
+                <h3>与基准材料对比</h3>
+                <span>基准：Ag-SnO₂ standard</span>
+              </div>
+              <div class="comparison-table" id="comparisonTable"></div>
+            </div>
+          </section>
+
+          <aside class="analysis-side">
+            <section class="panel ai-summary-panel">
+              <div class="panel-title tight">
+                <h2>AI 大模型分析摘要</h2>
+                <span class="online-state">已生成</span>
+              </div>
+              <ul class="summary-list" id="analysisSummary"></ul>
+            </section>
+
+            <section class="panel risk-panel">
+              <div class="panel-title tight">
+                <h2>风险与注意事项</h2>
+                <span class="sync-dot"></span>
+              </div>
+              <div class="risk-grid" id="riskTiles"></div>
+            </section>
+
+            <section class="panel constraints-panel">
+              <div class="panel-title tight">
+                <h2>外部实时约束</h2>
+                <span class="panel-badge">动态影响排名</span>
+              </div>
+              <div class="constraint-cards" id="constraintCards"></div>
+            </section>
+
+            <section class="panel next-action-panel">
+              <div class="panel-title tight">
+                <h2>推荐后动作</h2>
+              </div>
+              <div class="action-grid">
+                <button type="button">查看详细报告</button>
+                <button type="button">加入实验计划</button>
+                <button type="button">导出 PPT</button>
+                <button type="button">生成 Agent 解读</button>
+              </div>
+            </section>
+          </aside>
+
+          <section class="panel validation-panel">
+            <div class="panel-title tight">
+              <h2>从推荐到验证</h2>
+              <span id="validationHint">可在实验计划中查看当前进度与任务详情</span>
+            </div>
+            <div class="validation-flow">
+              <div class="flow-step done"><b>1</b><strong>推荐候选</strong><span>已完成</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><b>2</b><strong>专家复核</strong><span>待开始</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><b>3</b><strong>润湿角实验</strong><span>待开始</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><b>4</b><strong>基础表征</strong><span>待开始</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><b>5</b><strong>台架验证</strong><span>待开始</span></div>
+            </div>
+          </section>
         </main>
 
         <div class="command-bar">
