@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3A 电接触材料智能设计平台 Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <div class="grid-glow"></div>
+    <div class="particle-field" aria-hidden="true">
+      <span style="--x: 6%; --y: 18%; --d: 0s"></span>
+      <span style="--x: 18%; --y: 84%; --d: 1.4s"></span>
+      <span style="--x: 29%; --y: 10%; --d: 0.5s"></span>
+      <span style="--x: 45%; --y: 88%; --d: 2.2s"></span>
+      <span style="--x: 62%; --y: 12%; --d: 1.1s"></span>
+      <span style="--x: 79%; --y: 78%; --d: 2.8s"></span>
+      <span style="--x: 92%; --y: 25%; --d: 0.9s"></span>
+    </div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <button class="icon-button" aria-label="打开菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="brand-mark">3A</div>
+          <div>
+            <h1>3A 电接触材料智能设计平台</h1>
+            <p>AI Material Design Studio for Electrical Contacts</p>
+          </div>
+        </div>
+
+        <nav class="top-nav" aria-label="主导航">
+          <button class="nav-item active">
+            <span class="nav-icon">▣</span>
+            项目库
+          </button>
+          <button class="nav-item">
+            <span class="nav-icon">◬</span>
+            材料库
+          </button>
+          <button class="nav-item">
+            <span class="nav-icon">⌁</span>
+            实验数据
+          </button>
+          <button class="nav-item">
+            <span class="nav-icon">✦</span>
+            Agent 分析
+          </button>
+          <button class="nav-item">
+            <span class="nav-icon">⚙</span>
+            设置
+          </button>
+        </nav>
+
+        <div class="user-cluster">
+          <button class="bell-button" aria-label="通知">
+            <span class="bell-dot">6</span>
+            ⌔
+          </button>
+          <div class="avatar">张</div>
+          <button class="profile-button">张工程师 ▾</button>
+        </div>
+      </header>
+
+      <div class="main-grid">
+        <aside class="side-rail" aria-label="设计流程">
+          <button class="step-card active">
+            <span class="step-icon">▧</span>
+            <span>
+              <strong>需求输入</strong>
+              <small>场景与工况</small>
+            </span>
+          </button>
+          <button class="step-card">
+            <span class="step-icon">◎</span>
+            <span>
+              <strong>体系选择</strong>
+              <small>候选体系筛选</small>
+            </span>
+          </button>
+          <button class="step-card">
+            <span class="step-icon">◈</span>
+            <span>
+              <strong>权重设置</strong>
+              <small>多维权重配置</small>
+            </span>
+          </button>
+          <button class="step-card">
+            <span class="step-icon">◌</span>
+            <span>
+              <strong>实时情报</strong>
+              <small>外部信息监控</small>
+            </span>
+          </button>
+          <button class="step-card">
+            <span class="step-icon">▤</span>
+            <span>
+              <strong>推荐结果</strong>
+              <small>智能推荐方案</small>
+            </span>
+          </button>
+          <button class="step-card">
+            <span class="step-icon">☑</span>
+            <span>
+              <strong>实验计划</strong>
+              <small>验证计划生成</small>
+            </span>
+          </button>
+          <button class="step-card">
+            <span class="step-icon">▥</span>
+            <span>
+              <strong>报告输出</strong>
+              <small>报告与导出</small>
+            </span>
+          </button>
+
+          <div class="molecule-card">
+            <div class="molecule">
+              <i class="atom a1">Ag</i>
+              <i class="atom a2">SnO₂</i>
+              <i class="atom a3">Cu</i>
+              <i class="atom a4"></i>
+              <i class="atom a5"></i>
+              <span class="bond b1"></span>
+              <span class="bond b2"></span>
+              <span class="bond b3"></span>
+              <span class="bond b4"></span>
+            </div>
+          </div>
+        </aside>
+
+        <main class="workspace">
+          <section class="panel demand-panel">
+            <div class="panel-title">
+              <div>
+                <span class="eyebrow">Requirement Intake</span>
+                <h2>应用场景与工况输入</h2>
+              </div>
+              <span class="panel-badge">Step 01</span>
+            </div>
+
+            <div class="segmented-control" role="tablist" aria-label="应用场景">
+              <button class="scene-tab active" data-scene="contactor">接触器</button>
+              <button class="scene-tab" data-scene="relay">继电器</button>
+              <button class="scene-tab" data-scene="breaker">断路器</button>
+              <button class="scene-tab" data-scene="switch">开关</button>
+            </div>
+
+            <div class="field-grid">
+              <label class="field-row">
+                <span>额定电流 (A)</span>
+                <input value="100" inputmode="numeric" />
+              </label>
+              <label class="field-row">
+                <span>额定电压 (V)</span>
+                <select>
+                  <option>AC 400</option>
+                  <option>AC 220</option>
+                  <option>DC 48</option>
+                  <option>DC 220</option>
+                  <option>AC 690</option>
+                </select>
+              </label>
+              <label class="field-row split-row">
+                <span>电流类型</span>
+                <span class="button-toggle" role="group" aria-label="AC DC">
+                  <button class="toggle-option active">AC</button>
+                  <button class="toggle-option">DC</button>
+                </span>
+              </label>
+              <label class="field-row">
+                <span>开断频率 (次/小时)</span>
+                <input value="1200" inputmode="numeric" />
+              </label>
+              <label class="field-row">
+                <span>寿命要求 (次)</span>
+                <input value="1 × 10⁶" />
+              </label>
+              <label class="field-row">
+                <span>温度环境 (°C)</span>
+                <select>
+                  <option>-40 ~ 125</option>
+                  <option>-25 ~ 85</option>
+                  <option>-55 ~ 150</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="switch-list">
+              <div class="switch-row">
+                <span>是否腐蚀环境</span>
+                <div class="binary-switch">
+                  <button>否</button>
+                  <button class="active">是</button>
+                </div>
+              </div>
+              <div class="switch-row">
+                <span>是否高湿 / 盐雾</span>
+                <div class="binary-switch">
+                  <button>否</button>
+                  <button class="active">是</button>
+                </div>
+              </div>
+              <div class="switch-row">
+                <span>是否 RoHS / EHS 敏感</span>
+                <div class="binary-switch">
+                  <button>否</button>
+                  <button class="active">是</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="constraint-stack">
+              <label class="field-row">
+                <span>成本目标 (元/kg 接点材料)</span>
+                <select>
+                  <option>≤ 800</option>
+                  <option>≤ 950</option>
+                  <option>≤ 1200</option>
+                </select>
+              </label>
+              <label class="field-row">
+                <span>Ag 节省目标 (%)</span>
+                <select>
+                  <option>≥ 30%</option>
+                  <option>≥ 20%</option>
+                  <option>≥ 40%</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="insight-strip">
+              <span class="pulse-dot"></span>
+              <p>提示：完整填写可获得更精准的多目标推荐与实验验证计划。</p>
+            </div>
+          </section>
+
+          <section class="panel center-panel">
+            <div class="panel-title">
+              <div>
+                <span class="eyebrow">Multi Objective Optimizer</span>
+                <h2>权重与候选体系</h2>
+              </div>
+              <button class="ghost-button" id="resetWeights">↻ 重置</button>
+            </div>
+
+            <div class="optimizer-grid">
+              <div class="weights-card">
+                <div class="card-head">
+                  <strong>多维权重设置</strong>
+                  <span id="weightTotal">总和：100%</span>
+                </div>
+
+                <div class="weight-row">
+                  <label for="w-performance">性能</label>
+                  <input id="w-performance" type="range" min="0" max="50" value="30" data-weight="性能" />
+                  <output>30%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-cost">性价比</label>
+                  <input id="w-cost" type="range" min="0" max="50" value="20" data-weight="性价比" />
+                  <output>20%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-life">耐磨损</label>
+                  <input id="w-life" type="range" min="0" max="40" value="10" data-weight="耐磨损" />
+                  <output>10%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-price">材料价格</label>
+                  <input id="w-price" type="range" min="0" max="35" value="15" data-weight="材料价格" />
+                  <output>15%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-innovation">创新性</label>
+                  <input id="w-innovation" type="range" min="0" max="30" value="10" data-weight="创新性" />
+                  <output>10%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-novelty">新颖度</label>
+                  <input id="w-novelty" type="range" min="0" max="25" value="5" data-weight="新颖度" />
+                  <output>5%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-ehs">EHS / 毒性</label>
+                  <input id="w-ehs" type="range" min="0" max="25" value="5" data-weight="EHS / 毒性" />
+                  <output>5%</output>
+                </div>
+                <div class="weight-row">
+                  <label for="w-supply">供应链稳定性</label>
+                  <input id="w-supply" type="range" min="0" max="25" value="5" data-weight="供应链稳定性" />
+                  <output>5%</output>
+                </div>
+              </div>
+
+              <div class="radar-card">
+                <div class="card-head">
+                  <strong>目标空间投影</strong>
+                  <span>实时更新</span>
+                </div>
+                <svg id="radarChart" viewBox="0 0 260 260" role="img" aria-label="权重雷达图">
+                  <defs>
+                    <radialGradient id="radarFill" cx="50%" cy="50%" r="70%">
+                      <stop offset="0%" stop-color="#3fffdc" stop-opacity="0.75" />
+                      <stop offset="100%" stop-color="#12a7ff" stop-opacity="0.12" />
+                    </radialGradient>
+                  </defs>
+                  <g id="radarGrid"></g>
+                  <polygon id="radarPolygon" points="" fill="url(#radarFill)" stroke="#59ffe6" stroke-width="2"></polygon>
+                  <g id="radarDots"></g>
+                </svg>
+              </div>
+            </div>
+
+            <div class="candidate-section">
+              <div class="section-head">
+                <h3>候选材料体系 <span>可多选</span></h3>
+                <button class="ghost-button compact" id="selectSmart">智能筛选</button>
+              </div>
+
+              <div class="candidate-grid" id="candidateGrid">
+                <button class="candidate-card selected" data-material="Ag-SnO₂" data-cost="62" data-performance="92" data-risk="20">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-SnO₂</strong>
+                  <span class="crystal crystal-a"></span>
+                </button>
+                <button class="candidate-card selected" data-material="Ag-SnO₂-Cu" data-cost="74" data-performance="88" data-risk="18">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-SnO₂-Cu</strong>
+                  <span class="crystal crystal-b"></span>
+                </button>
+                <button class="candidate-card selected" data-material="Ag-SnO₂-Bi₂O₃" data-cost="70" data-performance="90" data-risk="16">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-SnO₂-Bi₂O₃</strong>
+                  <span class="crystal crystal-c"></span>
+                </button>
+                <button class="candidate-card selected" data-material="Ag-C" data-cost="83" data-performance="71" data-risk="28">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-C</strong>
+                  <span class="crystal crystal-d"></span>
+                </button>
+                <button class="candidate-card" data-material="Ag-WC" data-cost="55" data-performance="78" data-risk="24">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-WC</strong>
+                  <span class="crystal crystal-e"></span>
+                </button>
+                <button class="candidate-card" data-material="Ag-ZnO" data-cost="69" data-performance="76" data-risk="22">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-ZnO</strong>
+                  <span class="crystal crystal-f"></span>
+                </button>
+                <button class="candidate-card" data-material="Ag-CuO" data-cost="77" data-performance="69" data-risk="32">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-CuO</strong>
+                  <span class="crystal crystal-g"></span>
+                </button>
+                <button class="candidate-card" data-material="Ag-TiO₂" data-cost="73" data-performance="74" data-risk="21">
+                  <span class="checkmark">✓</span>
+                  <strong>Ag-TiO₂</strong>
+                  <span class="crystal crystal-h"></span>
+                </button>
+                <button class="candidate-card" data-material="Ag-based systems" data-cost="67" data-performance="73" data-risk="26">
+                  <span class="checkmark">✓</span>
+                  <strong>其他 Ag-based systems</strong>
+                  <span class="crystal crystal-i"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="advanced-section">
+              <h3>高级约束</h3>
+              <div class="advanced-grid">
+                <label>
+                  <span>允许掺杂元素</span>
+                  <input value="Cu, Ni, Ce, La, Zr" />
+                </label>
+                <label>
+                  <span>禁止毒性元素</span>
+                  <input value="Pb, Cd, Cr(VI), Hg" />
+                </label>
+                <label>
+                  <span>最大银含量 (wt%)</span>
+                  <select>
+                    <option>≤ 70</option>
+                    <option>≤ 60</option>
+                    <option>≤ 80</option>
+                  </select>
+                </label>
+                <label>
+                  <span>可接受工艺</span>
+                  <select>
+                    <option>固相烧结、涂层制备、复合粉体</option>
+                    <option>粉末冶金、热压烧结</option>
+                    <option>增材制造、表面改性</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="recommendation-rack" id="recommendationRack" aria-live="polite">
+              <div class="rack-empty">
+                <span class="scanner"></span>
+                <strong>等待 AI Agent 生成推荐</strong>
+                <p>选择候选体系并点击底部按钮，系统将输出排序、风险、实验路线和成本建议。</p>
+              </div>
+            </div>
+          </section>
+
+          <aside class="right-stack">
+            <section class="panel intel-panel">
+              <div class="panel-title">
+                <div>
+                  <span class="eyebrow">Live Intelligence</span>
+                  <h2>实时外部信息与 AI 检索</h2>
+                </div>
+                <select class="mini-select">
+                  <option>近30天</option>
+                  <option>近7天</option>
+                  <option>近90天</option>
+                </select>
+              </div>
+
+              <div class="market-card">
+                <div class="card-head">
+                  <strong>银价 / 氧化物原料价格波动</strong>
+                  <span>元/kg</span>
+                </div>
+                <svg id="priceChart" viewBox="0 0 360 170" role="img" aria-label="材料价格走势"></svg>
+                <div class="quote-list">
+                  <span><b>银价</b> 862.5 <em class="down">-3.3%</em></span>
+                  <span><b>SnO₂</b> 28.3 <em class="down">-1.1%</em></span>
+                  <span><b>Bi₂O₃</b> 46.7 <em class="up">+0.6%</em></span>
+                </div>
+              </div>
+
+              <div class="news-card">
+                <div class="tabs">
+                  <button class="active">新闻监控</button>
+                  <button>地缘政治</button>
+                  <button>供应链</button>
+                  <button>电接触材料</button>
+                </div>
+                <ul class="signal-list">
+                  <li><span class="signal red"></span> 印尼将继续实施银矿出口配额政策 <time>05-20 09:12</time></li>
+                  <li><span class="signal amber"></span> 铜利铜矿供应受罢工影响，物流延迟 <time>05-20 08:45</time></li>
+                  <li><span class="signal amber"></span> Heraeus：银价短期内或维持高位震荡 <time>05-20 07:30</time></li>
+                  <li><span class="signal green"></span> 国内某公司发布新型 Ag-SnO₂ 基触头材料 <time>05-20 06:50</time></li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="panel standard-panel">
+              <div class="panel-title tight">
+                <h2>国标 / 标准监控</h2>
+                <span class="sync-dot"></span>
+              </div>
+              <div class="standard-list">
+                <div><span>GB/T 14814-2024</span><b>电工合金触头材料</b><em>已发布</em></div>
+                <div><span>GB/T 30512-2014</span><b>电接触材料 术语</b><em>有效</em></div>
+                <div><span>GB/T 26125-2011</span><b>电子电气产品六种限用物质</b><em>有效</em></div>
+                <div><span>IEC 60216-1:2023</span><b>固体绝缘材料耐电化指数</b><em>更新</em></div>
+              </div>
+            </section>
+
+            <section class="panel knowledge-panel">
+              <div class="panel-title tight">
+                <h2>材料知识库</h2>
+                <span class="online-state">已连接</span>
+              </div>
+              <div class="knowledge-grid">
+                <div>
+                  <span>◉</span>
+                  <strong>材料特性大模型</strong>
+                  <small>接触电阻 / 电弧 / 磨损</small>
+                </div>
+                <div>
+                  <span>▤</span>
+                  <strong>历史实验数据库</strong>
+                  <small>36,842 条数据</small>
+                </div>
+                <div>
+                  <span>◫</span>
+                  <strong>论文调研库</strong>
+                  <small>1,256,782 篇</small>
+                </div>
+                <div>
+                  <span>◍</span>
+                  <strong>竞争对手 / 行业新闻</strong>
+                  <small>每日更新</small>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel agent-panel">
+              <div class="panel-title tight">
+                <h2>AI Agent 分析摘要</h2>
+                <button class="ghost-button compact" id="refreshAgent">刷新</button>
+              </div>
+              <div class="agent-status">
+                <span class="agent-orb"></span>
+                <p id="agentSummary">
+                  当前银价处于上升趋势，建议提高“Ag 节省目标”和“性价比”权重；Ag-SnO₂-Cu 与
+                  Ag-SnO₂-Bi₂O₃ 适合作为优先候选体系。
+                </p>
+              </div>
+            </section>
+          </aside>
+        </main>
+
+        <div class="command-bar">
+          <div class="run-state">
+            <span class="run-light"></span>
+            <span id="runStateText">Agent 就绪：等待生成候选方案</span>
+          </div>
+          <button class="primary-action" id="generateBtn">
+            <span>▦</span>
+            生成候选方案 / 开始智能推荐
+          </button>
+          <button class="secondary-action" id="saveBtn">
+            <span>▣</span>
+            保存场景
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
