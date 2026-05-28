@@ -200,6 +200,235 @@ const summaryTemplates = [
   "基于性能、EHS 与成本约束，Agent 建议采用“基线 Ag-SnO₂ + 掺杂优化 + 腐蚀环境加速测试”的三阶段路线。"
 ];
 
+const DEFAULT_AGENT_SUMMARY =
+  "当前银价处于上升趋势，建议提高“Ag 节省目标”和“性价比”权重；Ag-SnO₂-Cu 与 Ag-SnO₂-Bi₂O₃ 适合作为优先候选体系。";
+
+const EN_TEXT = {
+  "3A 电接触材料智能设计平台 Demo": "3A Electrical Contact Material AI Design Platform Demo",
+  "3A 电接触材料智能设计平台": "3A Electrical Contact Material AI Design Platform",
+  "项目库": "Projects",
+  "材料库": "Materials",
+  "实验数据": "Experimental Data",
+  "Agent 分析": "Agent Analysis",
+  "设置": "Settings",
+  "张工程师 ▾": "Engineer Zhang ▾",
+  "需求输入": "Requirements",
+  "场景与工况": "Scenario & Conditions",
+  "体系选择": "System Selection",
+  "候选体系筛选": "Candidate Screening",
+  "权重设置": "Weights",
+  "多维权重配置": "Multi-objective Weights",
+  "实时情报": "Live Intel",
+  "外部信息监控": "External Monitoring",
+  "推荐结果": "Recommendations",
+  "智能推荐方案": "AI Recommended Plans",
+  "实验计划": "Experiment Plan",
+  "验证计划生成": "Validation Planning",
+  "报告输出": "Reports",
+  "报告与导出": "Report & Export",
+  "生成历史": "Generation History",
+  "清空": "Clear",
+  "暂无记录，生成一次新材料后自动归档。": "No records yet. New material generations will be archived here.",
+  "应用场景与工况输入": "Application Scenario & Operating Conditions",
+  "接触器": "Contactor",
+  "继电器": "Relay",
+  "断路器": "Circuit Breaker",
+  "开关": "Switch",
+  "额定电流 (A)": "Rated Current (A)",
+  "额定电压 (V)": "Rated Voltage (V)",
+  "电流类型": "Current Type",
+  "开断频率 (次/小时)": "Switching Frequency (cycles/hour)",
+  "寿命要求 (次)": "Lifetime Requirement (cycles)",
+  "温度环境 (°C)": "Temperature Range (°C)",
+  "是否腐蚀环境": "Corrosive Environment",
+  "是否高湿 / 盐雾": "High Humidity / Salt Fog",
+  "是否 RoHS / EHS 敏感": "RoHS / EHS Sensitive",
+  "否": "No",
+  "是": "Yes",
+  "成本目标 (元/kg 接点材料)": "Cost Target (CNY/kg contact material)",
+  "Ag 节省目标 (%)": "Ag Saving Target (%)",
+  "提示：完整填写可获得更精准的多目标推荐与实验验证计划。": "Tip: Complete inputs improve multi-objective recommendations and validation plans.",
+  "权重与候选体系": "Weights & Candidate Systems",
+  "重置": "Reset",
+  "多维权重设置": "Multi-objective Weights",
+  "目标空间投影": "Objective-space Projection",
+  "实时更新": "Live Update",
+  "性能": "Performance",
+  "性价比": "Cost Performance",
+  "耐磨损": "Wear Resistance",
+  "材料价格": "Material Price",
+  "创新性": "Innovation",
+  "新颖度": "Novelty",
+  "EHS / 毒性": "EHS / Toxicity",
+  "供应链稳定性": "Supply Chain Stability",
+  "候选材料体系": "Candidate Material Systems",
+  "可多选": "Multi-select",
+  "智能筛选": "Smart Filter",
+  "其他 Ag-based systems": "Other Ag-based systems",
+  "高级约束": "Advanced Constraints",
+  "允许掺杂元素": "Allowed Dopants",
+  "禁止毒性元素": "Forbidden Toxic Elements",
+  "最大银含量 (wt%)": "Maximum Ag Content (wt%)",
+  "可接受工艺": "Acceptable Processes",
+  "固相烧结、涂层制备、复合粉体": "Solid-state sintering, coating, composite powder",
+  "粉末冶金、热压烧结": "Powder metallurgy, hot-press sintering",
+  "增材制造、表面改性": "Additive manufacturing, surface modification",
+  "等待 AI Agent 生成推荐": "Waiting for AI Agent recommendations",
+  "选择候选体系并点击底部按钮，系统将输出排序、风险、实验路线和成本建议。":
+    "Select candidate systems and click the bottom action. The system will output ranking, risk, experiment route and cost advice.",
+  "实时外部信息与 AI 检索": "Live External Intelligence & AI Search",
+  "近30天": "Last 30 days",
+  "近7天": "Last 7 days",
+  "近90天": "Last 90 days",
+  "银价 / 氧化物原料价格波动": "Silver / Oxide Raw Material Price Volatility",
+  "元/kg": "CNY/kg",
+  "银价": "Silver",
+  "新闻监控": "News Monitor",
+  "地缘政治": "Geopolitics",
+  "供应链": "Supply Chain",
+  "电接触材料": "Contact Materials",
+  "国标 / 标准监控": "National / Standard Monitor",
+  "材料知识库": "Material Knowledge Base",
+  "已连接": "Connected",
+  "AI Agent 分析摘要": "AI Agent Analysis Summary",
+  "刷新": "Refresh",
+  "Agent 就绪：等待生成候选方案": "Agent ready: waiting to generate candidates",
+  "生成候选方案 / 开始智能推荐": "Generate Candidates / Start AI Recommendation",
+  "保存场景": "Save Scenario",
+  "候选材料推荐结果 / 多维分析": "Candidate Material Recommendations / Multi-dimensional Analysis",
+  "生成后将在这里展示 Top 候选材料、说明、风险、外部约束与后续实验建议。":
+    "After generation, this view shows top candidates, rationale, risks, external constraints and next-step experiment suggestions.",
+  "生成时间": "Generation Time",
+  "初始要求": "Initial Requirements",
+  "推荐材料": "Recommended Material",
+  "← 返回需求页": "← Back to Requirements",
+  "重新生成推荐": "Regenerate",
+  "Top 10 推荐候选": "Top 10 Recommended Candidates",
+  "候选 #1": "Candidate #1",
+  "材料组成 (wt%)": "Composition (wt%)",
+  "对比基准 (wt%)": "Benchmark (wt%)",
+  "多维综合能力": "Multi-dimensional Capability",
+  "关键预测指标": "Key Predicted Metrics",
+  "微观机制解释": "Micro-mechanism Explanation",
+  "与基准材料对比": "Comparison with Benchmark",
+  "基准：Ag-SnO₂ standard": "Benchmark: Ag-SnO₂ standard",
+  "AI 大模型分析摘要": "AI Model Analysis Summary",
+  "已生成": "Generated",
+  "风险与注意事项": "Risks & Notes",
+  "外部实时约束": "Live External Constraints",
+  "动态影响排名": "Dynamic Impact Ranking",
+  "推荐后动作": "Next Actions",
+  "查看详细报告": "View Detailed Report",
+  "加入实验计划": "Add to Experiment Plan",
+  "导出 PPT": "Export PPT",
+  "生成 Agent 解读": "Generate Agent Brief",
+  "从推荐到验证": "From Recommendation to Validation",
+  "可在实验计划中查看当前进度与任务详情": "Progress and task details are available in Experiment Plan",
+  "推荐候选": "Recommended Candidate",
+  "已完成": "Completed",
+  "专家复核": "Expert Review",
+  "待开始": "Pending",
+  "润湿角实验": "Wetting-angle Test",
+  "基础表征": "Basic Characterization",
+  "台架验证": "Bench Validation",
+  "总和": "Total",
+  "个候选": "candidates",
+  "材料": "Material",
+  "综合评分 ↑": "Score ↑",
+  "成本 (元/kg) ↓": "Cost (CNY/kg) ↓",
+  "抗电弧 (%) ↑": "Arc Resistance (%) ↑",
+  "寿命 (相对) ↑": "Lifetime (relative) ↑",
+  "Ag 含量 ↓": "Ag Content ↓",
+  "基准": "Benchmark",
+  "候选": "Candidate",
+  "成熟体系": "Mature System",
+  "低毒": "Low Toxicity",
+  "抗烧蚀": "Arc Erosion Resistance",
+  "节银潜力": "Ag Saving Potential",
+  "导电增强": "Conductivity Boost",
+  "成本优化": "Cost Optimized",
+  "抗熔焊": "Anti-welding",
+  "稳定氧化物": "Stable Oxide",
+  "可靠性": "Reliability",
+  "低成本": "Low Cost",
+  "低熔焊": "Low Welding Risk",
+  "工艺敏感": "Process Sensitive",
+  "耐磨": "Wear Resistant",
+  "高硬度": "High Hardness",
+  "成本压力": "Cost Pressure",
+  "替代体系": "Alternative System",
+  "温升可控": "Temperature-rise Controlled",
+  "低银": "Low Ag",
+  "新配方": "New Formulation",
+  "风险较高": "Higher Risk",
+  "高温稳定": "High-temperature Stable",
+  "界面强化": "Interface Strengthened",
+  "可探索": "Exploratory",
+  "开放搜索": "Open Search",
+  "高创新": "High Innovation",
+  "需验证": "Needs Validation",
+  "高性能": "High Performance",
+  "稀土改性": "Rare-earth Modified",
+  "抗电弧": "Arc Resistant",
+  "寿命提升": "Lifetime Boost",
+  "梯度结构": "Gradient Structure",
+  "新颖度高": "High Novelty",
+  "性价比优": "Cost-effective",
+  "EHS 友好": "EHS Friendly",
+  "高可靠": "High Reliability",
+  "纳米弥散": "Nano-dispersed",
+  "工艺可控": "Process Controllable",
+  "成熟稳定": "Mature & Stable",
+  "基线样": "Baseline Sample",
+  "低风险": "Low Risk",
+  "低 Ag 方案": "Low-Ag Scheme",
+  "抗粘着": "Anti-adhesion",
+  "耐磨优先": "Wear-first",
+  "成本平衡": "Cost Balanced",
+  "探索配方": "Exploratory Formula",
+  "陶瓷增强": "Ceramic Reinforced",
+  "候选体系": "Candidate System",
+  "待验证": "To Validate",
+  "AI 推荐": "AI Recommended",
+  "导电率": "Conductivity",
+  "接触电阻": "Contact Resistance",
+  "润湿性": "Wettability",
+  "质量损失": "Mass Loss",
+  "寿命": "Lifetime",
+  "Ag 节省": "Ag Saving",
+  "成本": "Cost",
+  "可制造性": "Manufacturability",
+  "EHS": "EHS",
+  "团聚风险": "Agglomeration Risk",
+  "润湿角": "Wetting Angle",
+  "电弧烧蚀坑": "Arc Erosion Pit",
+  "迁移风险": "Migration Risk",
+  "Ag 流失": "Ag Loss",
+  "宏观寿命": "Macroscopic Lifetime",
+  "下降": "Lower",
+  "小幅下降": "Slightly Lower",
+  "变浅": "Shallower",
+  "需观察": "Needs Observation",
+  "上升": "Higher",
+  "可控": "Controlled",
+  "持平": "Stable",
+  "提升": "Improved",
+  "待验证": "To Validate",
+  "工艺风险": "Process Risk",
+  "数据置信度": "Data Confidence",
+  "供应链风险": "Supply Risk",
+  "EHS 风险": "EHS Risk",
+  "低": "Low",
+  "中": "Medium",
+  "高": "High",
+  "银价走势": "Silver Price Trend",
+  "国标 / 法规": "Standards / Regulations",
+  "行业新闻": "Industry News",
+  "毒性 / EHS": "Toxicity / EHS",
+  "无限制物质": "No restricted substances",
+  "需复核": "Review Required"
+};
+
 const sliders = [...document.querySelectorAll(".weight-row input[type='range']")];
 const weightTotal = document.querySelector("#weightTotal");
 const radarGrid = document.querySelector("#radarGrid");
@@ -242,9 +471,171 @@ const analysisSummary = document.querySelector("#analysisSummary");
 const riskTiles = document.querySelector("#riskTiles");
 const constraintCards = document.querySelector("#constraintCards");
 const navItems = [...document.querySelectorAll(".top-nav .nav-item")];
+const languageSwitch = document.querySelector("#languageSwitch");
+const languageSwitchText = document.querySelector("#languageSwitchText");
 
 let historyRecords = loadHistory();
 let activeRecordId = historyRecords[0]?.id || null;
+let currentLang = "zh";
+let summaryTemplateIndex = 0;
+const originalTextNodes = new WeakMap();
+
+function isEnglish() {
+  return currentLang === "en";
+}
+
+function tx(text) {
+  if (!isEnglish()) return text;
+  return EN_TEXT[text] || text;
+}
+
+function translateJoin(items, separator = " · ") {
+  return items.map((item) => tx(item)).join(separator);
+}
+
+function formatDateForLanguage(date) {
+  const pad = (value) => String(value).padStart(2, "0");
+  if (isEnglish()) {
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  }
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+}
+
+function recordDate(record) {
+  return record.createdAt ? new Date(record.createdAt) : new Date();
+}
+
+function recordTitle(record) {
+  const dateText = formatDateForLanguage(recordDate(record));
+  return isEnglish() ? `Material generated on ${dateText}` : `${dateText} 生成的新材料`;
+}
+
+function requirementText(requirements, detail = "short") {
+  if (!requirements) return "--";
+  if (!isEnglish()) return detail === "full" ? requirements.full : requirements.short;
+  const scene = tx(requirements.scene || "接触器");
+  const short = `${scene} | ${requirements.current}A / ${requirements.voltage} / ${requirements.mode} | ${requirements.frequency} cycles/hour | ${requirements.temp}°C`;
+  if (detail === "short") return short;
+  return `${short} | lifetime ${requirements.life} | cost ${requirements.costTarget} | Ag saving ${requirements.agTarget}`;
+}
+
+function dynamicNote(text) {
+  if (!isEnglish()) return text;
+  const notes = {
+    "综合性能稳健，适合做基线配方和快速验证样件。": "Stable overall performance, suitable as a baseline formulation and fast validation sample.",
+    "在银价上行时更具成本弹性，建议优先做 Cu 梯度掺杂。": "More cost-resilient when silver prices rise. Prioritize Cu gradient-doping trials.",
+    "性能空间更均衡，适合腐蚀与高湿工况下的耐久验证。": "Balanced performance space, suitable for durability validation under corrosion and high humidity.",
+    "性价比突出，但高温氧化和磨损风险需要实验确认。": "Strong cost-performance, but high-temperature oxidation and wear risks need experimental confirmation.",
+    "机械磨损优势明显，适合高载荷但供应链成本需监控。": "Clear mechanical wear advantage for high-load cases, with supply cost monitoring required.",
+    "可作为 EHS 友好备选，但需补充电弧侵蚀数据。": "An EHS-friendly backup route, but arc erosion data must be supplemented.",
+    "具备探索价值，建议先进行小样烧结窗口筛选。": "Worth exploring. Start with small-sample sintering-window screening.",
+    "适合高温稳定性探索，需要优化润湿和界面结合。": "Suitable for high-temperature stability exploration; wettability and interface bonding need optimization.",
+    "可交给 Agent 扩展检索 Ag 基复合体系与专利路线。": "Let the Agent expand searches across Ag-based composite systems and patent routes.",
+    "Cu 与 Bi₂O₃ 协同改善导电和润湿，适合作为高频接触器的首批验证配方。": "Cu and Bi₂O₃ jointly improve conductivity and wettability, making this a strong first-batch validation formula for high-frequency contactors.",
+    "CeO₂ 有助于稳定氧化物弥散结构，建议重点观察电弧烧蚀坑形貌。": "CeO₂ helps stabilize oxide dispersion; focus on arc erosion pit morphology.",
+    "梯度分布可降低局部热应力，适合探索涂层制备和复合粉体路线。": "Gradient distribution may reduce local thermal stress and fits coating or composite-powder routes.",
+    "在高湿与盐雾工况下更稳健，适合与 Ag-SnO₂ 基线做并行对比。": "More robust under humidity and salt fog; compare in parallel with the Ag-SnO₂ baseline.",
+    "纳米 SnO₂ 提升弥散均匀性，但需控制粉体团聚与烧结窗口。": "Nano SnO₂ improves dispersion uniformity, but powder agglomeration and sintering windows must be controlled.",
+    "适合作为所有新方案的对照材料，用于校准寿命和接触电阻曲线。": "Good control material for calibrating lifetime and contact-resistance curves.",
+    "银节省潜力大，但高温氧化和磨损颗粒脱落需要重点验证。": "High Ag-saving potential, with oxidation and wear-particle shedding requiring focused validation.",
+    "石墨烯可能改善导电网络，但放大制备一致性是主要风险。": "Graphene may improve conductive networks, but scale-up consistency is the key risk.",
+    "适合高载荷机械磨损场景，需评估接触电阻随循环次数的漂移。": "Suitable for high-load wear cases; evaluate contact-resistance drift over cycling.",
+    "ZnO 体系 EHS 友好，可作为 SnO₂ 供应波动时的备选路线。": "ZnO is EHS-friendly and can serve as a backup route when SnO₂ supply fluctuates.",
+    "Ni 可能改善界面结合，但 CuO 热稳定性和电弧产物需谨慎评估。": "Ni may improve interface bonding, but CuO thermal stability and arc products require careful evaluation.",
+    "适合高温稳定性探索，关键在于改善 Ag 与陶瓷相润湿。": "Suitable for high-temperature stability exploration; the key is improving Ag-ceramic wettability."
+  };
+  return notes[text] || text;
+}
+
+function buildSummaryItems(record, candidate) {
+  if (isEnglish()) {
+    return [
+      `After combining weights and external market signals, ${candidate.material} ranks first with a score of ${candidate.score}.`,
+      `${candidate.material} is strongest in ${translateJoin(candidate.tags, ", ")}. Start with three dopant-ratio pilot samples.`,
+      `Under the current silver-price and ${record.requirements.costTarget} cost constraint, prioritize the Ag content window around ${candidate.composition.Ag || 84} wt%.`,
+      "Next step: run Ag-SnO₂ baseline and candidate samples in parallel for contact resistance, wetting angle, erosion morphology and salt-fog aging."
+    ];
+  }
+  return [
+    `综合权重与外部行情后，${candidate.material} 暂列第一，综合评分 ${candidate.score}。`,
+    `${candidate.material} 的主要优势是 ${candidate.tags.join("、")}，适合先做 3 组掺杂比例小样。`,
+    `在当前银价与 ${record.requirements.costTarget} 成本约束下，建议优先验证 Ag 含量 ${candidate.composition.Ag || 84} wt% 附近的窗口。`,
+    "下一步建议：基准 Ag-SnO₂ 对照样、候选样同步做接触电阻、润湿角、烧蚀坑形貌与盐雾老化。"
+  ];
+}
+
+function dynamicRiskText(risk) {
+  if (!isEnglish()) return risk.text;
+  const text = {
+    工艺风险: risk.level === "高" ? "Sintering window and phase dispersion need pilot screening." : risk.level === "中" ? "Process window should be verified with small samples." : "Mature powder metallurgy can support fast validation.",
+    数据置信度: "Historical data covers key metrics, but new dopant ratios still need additional validation.",
+    供应链风险: risk.level === "中" ? "Raw material price volatility should be included in the cost-sensitivity model." : "Key raw-material supply is stable in the short term.",
+    "EHS 风险": risk.level === "中" ? "EHS review is required before scale-up." : "The current candidate satisfies RoHS/REACH constraints; keep batch-level EHS records."
+  };
+  return text[risk.title] || risk.text;
+}
+
+function dynamicConstraintText(item) {
+  if (!isEnglish()) return item.text;
+  const text = {
+    银价走势: "Low-Ag routes gain cost advantage as silver price pressure increases.",
+    "国标 / 法规": "Latest 2024 standard can be mapped directly to contact-material validation items.",
+    行业新闻: "Track silver-paste demand and its impact on silver-price transmission.",
+    "毒性 / EHS": "Compliant with current environmental constraints; keep an EHS review checkpoint."
+  };
+  return text[item.title] || item.text;
+}
+
+function applyStaticLanguage() {
+  document.documentElement.lang = isEnglish() ? "en" : "zh-CN";
+  document.body.classList.toggle("lang-en", isEnglish());
+  document.title = tx("3A 电接触材料智能设计平台 Demo");
+  languageSwitchText.textContent = isEnglish() ? "EN / 中文" : "中文 / EN";
+  languageSwitch.setAttribute("aria-label", isEnglish() ? "Switch language to Chinese" : "切换为英文");
+
+  const skipSelector =
+    "script,style,svg,#languageSwitch,#recommendationRack,#historyList,#agentSummary,#runStateText,#toast,#analysisTitle,#analysisSubtitle,#analysisTime,#analysisRequirement,#analysisRecommendation,#analysisTopList,#analysisBestTitle,#compositionChips,#benchmarkChips,#analysisRadar,#predictorBars,#mechanismList,#comparisonTable,#analysisSummary,#riskTiles,#constraintCards";
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement?.closest(skipSelector)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+    const original = originalTextNodes.get(node);
+    const match = original.match(/^(\s*)(.*?)(\s*)$/s);
+    if (!match) return;
+    node.nodeValue = `${match[1]}${tx(match[2])}${match[3]}`;
+  });
+}
+
+function refreshLanguageRender() {
+  applyStaticLanguage();
+  updateSliders();
+  drawRadarGrid();
+  renderHistoryList();
+
+  const record = historyRecords.find((item) => item.id === activeRecordId);
+  if (record) {
+    renderRecommendations(record.candidates);
+    if (analysisView.classList.contains("active-view")) {
+      const selectedIndex = Number(document.querySelector(".analysis-candidate.active")?.dataset.index || 0);
+      renderAnalysis(record, selectedIndex);
+    } else {
+      runStateText.textContent = isEnglish()
+        ? `Recommendation complete: ${record.recommendation}, score ${record.candidates[0].score}`
+        : `推荐完成：${record.recommendation} 当前综合评分 ${record.candidates[0].score}`;
+    }
+  } else {
+    agentSummary.textContent = tx(DEFAULT_AGENT_SUMMARY);
+    runStateText.textContent = tx("Agent 就绪：等待生成候选方案");
+  }
+}
 
 function polarToPoint(center, radius, angle) {
   const radians = (Math.PI / 180) * angle;
@@ -271,8 +662,7 @@ function sample(items, count) {
 }
 
 function formatDate(date) {
-  const pad = (value) => String(value).padStart(2, "0");
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  return formatDateForLanguage(date);
 }
 
 function drawRadarGrid() {
@@ -297,7 +687,7 @@ function drawRadarGrid() {
     const axis = polarToPoint(center, maxRadius, -90 + step * index);
     const text = polarToPoint(center, maxRadius + 24, -90 + step * index);
     grid.push(`<line x1="${center}" y1="${center}" x2="${axis.x}" y2="${axis.y}" stroke="rgba(120, 185, 220, 0.16)" />`);
-    grid.push(`<text class="radar-label" x="${text.x}" y="${text.y}" text-anchor="middle" dominant-baseline="middle">${label}</text>`);
+    grid.push(`<text class="radar-label" x="${text.x}" y="${text.y}" text-anchor="middle" dominant-baseline="middle">${tx(label)}</text>`);
   });
 
   radarGrid.innerHTML = grid.join("");
@@ -314,7 +704,7 @@ function updateSliders() {
     total += value;
   });
 
-  weightTotal.textContent = `总和：${total}%`;
+  weightTotal.textContent = `${tx("总和")}：${total}%`;
   weightTotal.style.color = total === 100 ? "var(--muted)" : "var(--amber)";
   updateRadar();
 }
@@ -531,7 +921,8 @@ function generateCandidateSet() {
 }
 
 function collectRequirements() {
-  const activeScene = document.querySelector(".scene-tab.active")?.textContent.trim() || "未选择场景";
+  const activeSceneTab = document.querySelector(".scene-tab.active");
+  const activeScene = scenes[activeSceneTab?.dataset.scene]?.label || "未选择场景";
   const current = inputs[0]?.value || "--";
   const voltage = inputs[1]?.value || "--";
   const frequency = inputs[2]?.value || "--";
@@ -542,7 +933,12 @@ function collectRequirements() {
   const costTarget = constraintSelects[0]?.value || "≤ 800";
   const agTarget = constraintSelects[1]?.value || "≥ 30%";
   const activeSwitches = [...document.querySelectorAll(".binary-switch")]
-    .map((group) => group.querySelector(".active")?.textContent.trim())
+    .map((group) => {
+      const value = group.querySelector(".active")?.textContent.trim();
+      if (value === "Yes") return "是";
+      if (value === "No") return "否";
+      return value;
+    })
     .join(" / ");
   const short = `${activeScene} | ${current}A / ${voltage} / ${mode} | ${frequency}次/小时 | ${temp}°C`;
   return {
@@ -582,7 +978,11 @@ function createGenerationRecord(candidates) {
 }
 
 function saveHistory() {
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(historyRecords.slice(0, 20)));
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(historyRecords.slice(0, 20)));
+  } catch {
+    // Direct file previews may restrict storage; keep in-memory history working.
+  }
 }
 
 function loadHistory() {
@@ -595,7 +995,7 @@ function loadHistory() {
 
 function renderHistoryList() {
   if (!historyRecords.length) {
-    historyList.innerHTML = `<div class="history-empty">暂无记录，生成一次新材料后自动归档。</div>`;
+    historyList.innerHTML = `<div class="history-empty">${tx("暂无记录，生成一次新材料后自动归档。")}</div>`;
     return;
   }
 
@@ -603,9 +1003,9 @@ function renderHistoryList() {
     .map(
       (record) => `
         <button class="history-record ${record.id === activeRecordId ? "active" : ""}" data-id="${record.id}" type="button">
-          <strong>${record.title}</strong>
-          <span>初始要求：${record.requirements.short}</span>
-          <small>推荐材料：${record.recommendation}</small>
+          <strong>${recordTitle(record)}</strong>
+          <span>${tx("初始要求")}：${requirementText(record.requirements)}</span>
+          <small>${tx("推荐材料")}：${record.recommendation}</small>
         </button>
       `
     )
@@ -622,8 +1022,8 @@ function renderRecommendations(candidates) {
           <article class="result-card" data-rank="#${index + 1}" style="animation-delay: ${index * 90}ms">
             <h4>${item.material}</h4>
             <div class="score-ring" style="--score: ${item.score}">${item.score}</div>
-            <p>${item.note}</p>
-            <div class="result-tags">${item.tags.map((tag) => `<span>${tag}</span>`).join("")}</div>
+            <p>${dynamicNote(item.note)}</p>
+            <div class="result-tags">${item.tags.map((tag) => `<span>${tx(tag)}</span>`).join("")}</div>
           </article>
         `
         )
@@ -644,12 +1044,14 @@ function setView(view) {
 function renderAnalysis(record, selectedIndex = 0) {
   const candidate = record.candidates[selectedIndex] || record.candidates[0];
   activeRecordId = record.id;
-  analysisTitle.textContent = record.title;
-  analysisSubtitle.textContent = `基于初始要求「${record.requirements.full}」生成，推荐材料为 ${record.recommendation}。`;
-  analysisTime.textContent = record.createdAtText;
-  analysisRequirement.textContent = record.requirements.short;
+  analysisTitle.textContent = recordTitle(record);
+  analysisSubtitle.textContent = isEnglish()
+    ? `Generated from initial requirements "${requirementText(record.requirements, "full")}". Recommended material: ${record.recommendation}.`
+    : `基于初始要求「${record.requirements.full}」生成，推荐材料为 ${record.recommendation}。`;
+  analysisTime.textContent = formatDateForLanguage(recordDate(record));
+  analysisRequirement.textContent = requirementText(record.requirements);
   analysisRecommendation.textContent = record.recommendation;
-  candidateCountBadge.textContent = `${record.candidates.length} 个候选`;
+  candidateCountBadge.textContent = `${record.candidates.length} ${tx("个候选")}`;
 
   analysisTopList.innerHTML = record.candidates
     .map(
@@ -659,7 +1061,7 @@ function renderAnalysis(record, selectedIndex = 0) {
           <span class="mini-lattice"></span>
           <span>
             <h3>${item.material}</h3>
-            <small>${item.tags.join(" · ")}</small>
+            <small>${translateJoin(item.tags)}</small>
           </span>
           <span class="score-badge">${item.score}</span>
         </button>
@@ -673,7 +1075,7 @@ function renderAnalysis(record, selectedIndex = 0) {
 }
 
 function renderCandidateDetail(record, candidate, selectedIndex) {
-  analysisBestTitle.textContent = `候选 #${selectedIndex + 1}  ${candidate.material}`;
+  analysisBestTitle.textContent = `${tx("候选")} #${selectedIndex + 1}  ${candidate.material}`;
   compositionChips.innerHTML = Object.entries(candidate.composition)
     .map(([key, value]) => `<span class="metric-chip">${key} <b>${value}</b></span>`)
     .join("");
@@ -687,7 +1089,7 @@ function renderCandidateDetail(record, candidate, selectedIndex) {
       const width = clamp(50 + metric.delta * 1.8, 16, 96);
       return `
         <div class="predictor-row">
-          <span>${metric.label}</span>
+          <span>${tx(metric.label)}</span>
           <span class="predictor-track"><span class="predictor-fill" style="width: ${width}%"></span></span>
           <em>${metric.delta > 0 ? "+" : ""}${metric.delta}${metric.unit}</em>
         </div>
@@ -699,9 +1101,9 @@ function renderCandidateDetail(record, candidate, selectedIndex) {
     .map(
       (item) => `
         <div class="mechanism-item">
-          <span class="mechanism-icon">${item.label.slice(0, 2)}</span>
-          <span>${item.label}</span>
-          <em>${item.status} ${item.arrow}</em>
+          <span class="mechanism-icon">${tx(item.label).slice(0, 2)}</span>
+          <span>${tx(item.label)}</span>
+          <em>${tx(item.status)} ${item.arrow}</em>
         </div>
       `
     )
@@ -722,13 +1124,13 @@ function renderCandidateDetail(record, candidate, selectedIndex) {
 
   comparisonTable.innerHTML = `
     <div class="comparison-row header">
-      <span>材料</span><span>综合评分 ↑</span><span>成本 (元/kg) ↓</span><span>抗电弧 (%) ↑</span><span>寿命 (相对) ↑</span><span>Ag 含量 ↓</span>
+      <span>${tx("材料")}</span><span>${tx("综合评分 ↑")}</span><span>${tx("成本 (元/kg) ↓")}</span><span>${tx("抗电弧 (%) ↑")}</span><span>${tx("寿命 (相对) ↑")}</span><span>${tx("Ag 含量 ↓")}</span>
     </div>
     ${comparisonRows
       .map(
         (row, index) => `
           <div class="comparison-row">
-            <span>${index === 0 ? "基准" : `候选 #${index}`} ${row.name}</span>
+            <span>${index === 0 ? tx("基准") : `${tx("候选")} #${index}`} ${row.name}</span>
             <span class="${index > 0 ? "up-value" : ""}">${row.score}</span>
             <span class="${row.cost > 1900 ? "down-value" : ""}">${row.cost.toLocaleString()}</span>
             <span>${row.resistance}</span>
@@ -740,15 +1142,15 @@ function renderCandidateDetail(record, candidate, selectedIndex) {
       .join("")}
   `;
 
-  analysisSummary.innerHTML = record.summary.map((item) => `<li>${item}</li>`).join("");
+  analysisSummary.innerHTML = buildSummaryItems(record, candidate).map((item) => `<li>${item}</li>`).join("");
   riskTiles.innerHTML = candidate.risks
     .map((risk) => {
       const cls = risk.level === "低" ? "low" : risk.level === "高" ? "high" : "";
-      return `<div class="risk-tile"><strong>${risk.title}<b class="${cls}">${risk.level}</b></strong><span>${risk.text}</span></div>`;
+      return `<div class="risk-tile"><strong>${tx(risk.title)}<b class="${cls}">${tx(risk.level)}</b></strong><span>${dynamicRiskText(risk)}</span></div>`;
     })
     .join("");
   constraintCards.innerHTML = candidate.constraints
-    .map((item) => `<div class="constraint-card"><strong>${item.title}<em>${item.value}</em></strong><span>${item.text}</span></div>`)
+    .map((item) => `<div class="constraint-card"><strong>${tx(item.title)}<em>${tx(item.value)}</em></strong><span>${dynamicConstraintText(item)}</span></div>`)
     .join("");
 }
 
@@ -773,7 +1175,7 @@ function drawAnalysisRadar(scores) {
     const axis = polarToPoint(center, maxRadius, -90 + step * index);
     const text = polarToPoint(center, maxRadius + 18, -90 + step * index);
     grid.push(`<line x1="${center}" y1="${center}" x2="${axis.x}" y2="${axis.y}" stroke="rgba(120,185,220,.14)" />`);
-    grid.push(`<text x="${text.x}" y="${text.y}" text-anchor="middle" dominant-baseline="middle" fill="#9fb7c9" font-size="10">${label}</text>`);
+    grid.push(`<text x="${text.x}" y="${text.y}" text-anchor="middle" dominant-baseline="middle" fill="#9fb7c9" font-size="10">${tx(label)}</text>`);
   });
 
   const points = values.map((value, index) => {
@@ -801,18 +1203,20 @@ function drawAnalysisRadar(scores) {
 function runGeneration() {
   const candidates = generateCandidateSet();
   if (!candidates.length) {
-    showToast("至少选择一个候选材料体系。");
+    showToast(isEnglish() ? "Select at least one candidate material system." : "至少选择一个候选材料体系。");
     return;
   }
 
   generateBtn.disabled = true;
   document.body.classList.add("loading");
-  runStateText.textContent = "Agent 运行中：正在检索标准、行情、历史实验与候选配方...";
+  runStateText.textContent = isEnglish()
+    ? "Agent running: searching standards, market data, historical experiments and candidate formulas..."
+    : "Agent 运行中：正在检索标准、行情、历史实验与候选配方...";
   recommendationRack.innerHTML = `
     <div class="rack-empty">
       <span class="scanner"></span>
-      <strong>AI Agent 正在融合多源数据</strong>
-      <p>执行材料知识检索、成本敏感性分析、EHS 过滤、随机候选扩展和实验可行性排序。</p>
+      <strong>${isEnglish() ? "AI Agent is fusing multi-source data" : "AI Agent 正在融合多源数据"}</strong>
+      <p>${isEnglish() ? "Running material knowledge search, cost sensitivity analysis, EHS filtering, random candidate expansion and feasibility ranking." : "执行材料知识检索、成本敏感性分析、EHS 过滤、随机候选扩展和实验可行性排序。"}</p>
     </div>
   `;
 
@@ -823,12 +1227,16 @@ function runGeneration() {
     saveHistory();
     renderHistoryList();
     renderRecommendations(candidates);
-    runStateText.textContent = `推荐完成：${record.recommendation} 当前综合评分 ${candidates[0].score}`;
-    agentSummary.textContent = `AI Agent 推荐优先验证 ${record.recommendation}。本次结果已归档为「${record.title}」，可在左侧生成历史中回看。`;
+    runStateText.textContent = isEnglish()
+      ? `Recommendation complete: ${record.recommendation}, score ${candidates[0].score}`
+      : `推荐完成：${record.recommendation} 当前综合评分 ${candidates[0].score}`;
+    agentSummary.textContent = isEnglish()
+      ? `AI Agent recommends validating ${record.recommendation} first. This result has been archived as "${recordTitle(record)}" and can be reviewed from Generation History.`
+      : `AI Agent 推荐优先验证 ${record.recommendation}。本次结果已归档为「${recordTitle(record)}」，可在左侧生成历史中回看。`;
     generateBtn.disabled = false;
     document.body.classList.remove("loading");
     renderAnalysis(record);
-    showToast("已生成新材料结果分析页，并写入历史记录。");
+    showToast(isEnglish() ? "Generated the material analysis page and archived it in history." : "已生成新材料结果分析页，并写入历史记录。");
   }, 900);
 }
 
@@ -839,7 +1247,7 @@ function smartSelect() {
     const cost = Number(card.dataset.cost);
     card.classList.toggle("selected", performance >= 76 && risk <= 24 && cost >= 62);
   });
-  showToast("已按低毒、节银潜力和性能阈值完成智能筛选。");
+  showToast(isEnglish() ? "Smart filter applied using low toxicity, Ag-saving potential and performance thresholds." : "已按低毒、节银潜力和性能阈值完成智能筛选。");
 }
 
 function resetAllWeights() {
@@ -847,7 +1255,7 @@ function resetAllWeights() {
     slider.value = defaultWeights[index];
   });
   updateSliders();
-  showToast("权重已恢复为默认多目标配置。");
+  showToast(isEnglish() ? "Weights restored to the default multi-objective configuration." : "权重已恢复为默认多目标配置。");
 }
 
 function switchScene(tab) {
@@ -857,15 +1265,22 @@ function switchScene(tab) {
   currentInput.value = scene.current;
   voltageSelect.value = scene.voltage;
   frequencyInput.value = scene.frequency;
-  runStateText.textContent = `当前场景：${scene.label}，Agent 已刷新约束模板`;
-  showToast(scene.summary);
+  runStateText.textContent = isEnglish() ? `Current scenario: ${tx(scene.label)}. Agent constraint template refreshed.` : `当前场景：${scene.label}，Agent 已刷新约束模板`;
+  showToast(isEnglish() ? `${tx(scene.label)} scenario loaded. Constraint priorities have been refreshed.` : scene.summary);
 }
 
 function cycleSummary() {
   const currentIndex = summaryTemplates.findIndex((item) => item === agentSummary.textContent);
   const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % summaryTemplates.length;
-  agentSummary.textContent = summaryTemplates[nextIndex];
-  showToast("Agent 摘要已刷新。");
+  summaryTemplateIndex = nextIndex;
+  agentSummary.textContent = isEnglish()
+    ? [
+        "AI Agent completed multi-objective ranking. When silver prices rise, keep Ag-saving targets above 30%.",
+        "External intelligence shows short-term supply volatility. Prioritize low-toxicity, low-Ag systems scalable by powder metallurgy.",
+        "Based on performance, EHS and cost constraints, use a three-stage route: baseline, dopant optimization, and accelerated corrosion testing."
+      ][summaryTemplateIndex]
+    : summaryTemplates[summaryTemplateIndex];
+  showToast(isEnglish() ? "Agent summary refreshed." : "Agent 摘要已刷新。");
 }
 
 function wireInteractions() {
@@ -889,7 +1304,7 @@ function wireInteractions() {
     const record = historyRecords.find((item) => item.id === button.dataset.id);
     if (!record) return;
     renderAnalysis(record);
-    showToast(`已回看历史记录：${record.recommendation}`);
+    showToast(isEnglish() ? `Reviewing history record: ${record.recommendation}` : `已回看历史记录：${record.recommendation}`);
   });
 
   document.querySelectorAll(".toggle-option").forEach((button) => {
@@ -908,13 +1323,13 @@ function wireInteractions() {
 
   sceneTabs.forEach((tab) => tab.addEventListener("click", () => switchScene(tab)));
   generateBtn.addEventListener("click", runGeneration);
-  saveBtn.addEventListener("click", () => showToast("场景已保存为 Demo_Project_Contact_0526。"));
+  saveBtn.addEventListener("click", () => showToast(isEnglish() ? "Scenario saved as Demo_Project_Contact_0526." : "场景已保存为 Demo_Project_Contact_0526。"));
   selectSmart.addEventListener("click", smartSelect);
   resetWeights.addEventListener("click", resetAllWeights);
   refreshAgent.addEventListener("click", cycleSummary);
   backToDesignBtn.addEventListener("click", () => {
     setView("design");
-    showToast("已返回需求输入页。");
+    showToast(isEnglish() ? "Returned to the requirements page." : "已返回需求输入页。");
   });
   regenerateBtn.addEventListener("click", runGeneration);
   clearHistoryBtn.addEventListener("click", () => {
@@ -923,7 +1338,12 @@ function wireInteractions() {
     saveHistory();
     renderHistoryList();
     setView("design");
-    showToast("生成历史已清空。");
+    showToast(isEnglish() ? "Generation history cleared." : "生成历史已清空。");
+  });
+  languageSwitch.addEventListener("click", () => {
+    currentLang = isEnglish() ? "zh" : "en";
+    refreshLanguageRender();
+    showToast(isEnglish() ? "Language switched to English." : "已切换为中文。");
   });
 }
 
@@ -932,3 +1352,4 @@ drawPriceChart();
 updateSliders();
 renderHistoryList();
 wireInteractions();
+refreshLanguageRender();

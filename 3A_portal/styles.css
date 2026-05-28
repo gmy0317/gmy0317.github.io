@@ -237,10 +237,55 @@ p {
 }
 
 .bell-button,
+.language-switch,
 .profile-button {
   border: 0;
   background: transparent;
   cursor: pointer;
+}
+
+.language-switch {
+  position: relative;
+  min-width: 86px;
+  height: 34px;
+  border: 1px solid rgba(66, 244, 223, 0.24);
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(66, 244, 223, 0.12), rgba(95, 163, 255, 0.08)),
+    rgba(5, 18, 34, 0.72);
+  color: #dffbff;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  transition: 0.22s ease;
+}
+
+.language-switch::before {
+  content: "";
+  position: absolute;
+  inset: 4px auto 4px 5px;
+  width: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  opacity: 0.72;
+  box-shadow: 0 0 18px rgba(66, 244, 223, 0.32);
+  transition: transform 0.22s ease;
+}
+
+.language-switch span {
+  position: relative;
+  z-index: 1;
+}
+
+.language-switch:hover {
+  transform: translateY(-1px);
+  border-color: rgba(66, 244, 223, 0.68);
+  box-shadow: 0 0 20px rgba(66, 244, 223, 0.14);
+}
+
+body.lang-en .language-switch::before {
+  transform: translateX(45px);
 }
 
 .bell-button {
